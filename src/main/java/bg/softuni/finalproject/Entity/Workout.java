@@ -2,6 +2,7 @@ package bg.softuni.finalproject.Entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,7 +18,11 @@ public class Workout {
     @OneToMany(mappedBy = "workout", cascade = CascadeType.ALL)
     private List<Exercise> exercises;
 
+    @ManyToOne()
+    private User addedBy;
+
     public Workout() {
+        this.exercises = new ArrayList<>();
     }
 
     public Long getId() {
@@ -42,5 +47,13 @@ public class Workout {
 
     public void setExercises(List<Exercise> exercises) {
         this.exercises = exercises;
+    }
+
+    public User getAddedBy() {
+        return addedBy;
+    }
+
+    public void setAddedBy(User addedBy) {
+        this.addedBy = addedBy;
     }
 }

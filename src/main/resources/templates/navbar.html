@@ -18,20 +18,32 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
+                    <li class="nav-item" th:unless="${@userSession.isLoggedIn()}">
                         <a class="nav-link" th:href="@{/}">Home</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" th:unless="${@userSession.isLoggedIn()}">
                         <a class="nav-link" th:href="@{/features}">Features</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" th:unless="${@userSession.isLoggedIn()}">
                         <a class="nav-link" th:href="@{/pricing}">Pricing</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" th:unless="${@userSession.isLoggedIn()}">
                         <a class="nav-link" th:href="@{/register}">Register</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" th:unless="${@userSession.isLoggedIn()}">
                         <a class="nav-link" th:href="@{/login}">Login</a>
+                    </li>
+                    <li th:if="${@userSession.isLoggedIn()}" class="nav-item" >
+                        <a class="nav-link" th:href="@{/workouts}" >Workouts</a>
+                    </li>
+                    <li th:if="${@userSession.isLoggedIn()}" class="nav-item" >
+                        <a class="nav-link" th:href="@{/calories}" >Food Tracking</a>
+                    </li>
+                    <li th:if="${@userSession.isLoggedIn()}" class="nav-item" >
+                        <a class="nav-link" th:href="@{/activities}" >Activities</a>
+                    </li>
+                    <li th:if="${@userSession.isLoggedIn()}" class="nav-item" >
+                        <a class="nav-link text-primary active h5 text-stroke" th:href="@{/logout}"> Logout </a>
                     </li>
                 </ul>
             </div>

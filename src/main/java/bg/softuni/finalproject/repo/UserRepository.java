@@ -1,4 +1,4 @@
-package bg.softuni.finalproject.service;
+package bg.softuni.finalproject.repo;
 
 import bg.softuni.finalproject.Entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;

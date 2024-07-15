@@ -9,11 +9,11 @@
 <body>
 
 <!-- Navbar -->
-<div th:replace="navbar :: navbar(username=${userSession.user.username})"></div>
+<div th:replace="navbar :: navbar"></div>
 
 <!-- Home Page Content -->
 <div class="container my-5">
-    <h2 class="text-center">Welcome, <span th:text="${userSession.user.username}">User</span></h2>
+    <h2 class="text-center">Welcome, <span th:text="${username}"> User </span></h2>
     <div class="row mt-4">
         <div class="col-md-3">
             <a href="/goals" class="btn btn-primary btn-block">Goals</a>

@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Footer</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 <!-- Footer -->
 <footer th:fragment="footer" class="text-muted py-4 bg-light">
-    <div class="container">
-        <p class="float-end mb-1">
-            <a href="#">Back to top</a>
-        </p>
-        <p class="mb-1">© 2024 Fitness Tracker</p>
-        <p class="mb-0">New to Fitness Tracker? <a th:href="@{/}">Visit the homepage.</a></p>
+    <div class="footer-container">
+        <div class="footer-left">
+            <p class="mb-1">© 2024 Fitness Tracker</p>
+            <p class="mb-0">New to Fitness Tracker? <a th:href="@{/}">Visit the homepage.</a></p>
+        </div>
+        <div class="footer-right">
+            <p class="float-end mb-1"><a href="#">Back to top</a></p>
+            <p class="mb-1"><a th:href="@{/contact}">Contact us</a></p>
+        </div>
+
     </div>
 </footer>
 

@@ -72,7 +72,6 @@ public class UserController {
             return "redirect:/register";
         }
 
-
         return "redirect:/login";
     }
 
@@ -112,6 +111,15 @@ public class UserController {
     public String showHomePage(Model model) {
         model.addAttribute("username", userSession.getUsername());
         return "home";
+    }
+
+    @GetMapping("/logout")
+    public String logout() {
+        if (!userSession.isLoggedIn()) {
+            return "redirect:/";
+        }
+        userSession.logout();
+        return "redirect:/";
     }
 
 }

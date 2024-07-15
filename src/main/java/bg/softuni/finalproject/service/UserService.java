@@ -2,6 +2,7 @@ package bg.softuni.finalproject.service;
 
 import bg.softuni.finalproject.Entity.User;
 import bg.softuni.finalproject.config.UserSession;
+import bg.softuni.finalproject.repo.UserRepository;
 import bg.softuni.finalproject.web.dto.LoginDTO;
 import bg.softuni.finalproject.web.dto.UserRegisterDTO;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -55,9 +56,12 @@ public class UserService {
 
     public boolean validateUser(LoginDTO loginDTO) {
         User user = userRepository.findByUsername(loginDTO.getUsername());
+
         if (user != null && passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
+            userSession.login(user.getId(), loginDTO.getUsername());
             return true;
         }
+
         return false;
     }
 }

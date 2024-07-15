@@ -1,9 +1,11 @@
 package bg.softuni.finalproject.web.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class LoginDTO {
     @NotBlank
+    @Size(min = 5, max = 20)
     private String username;
 
     @NotBlank

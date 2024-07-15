@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,11 +25,15 @@ public class User {
 
     @Column(nullable = false)
     private String password;
-
+    @Column(nullable = false, unique = true)
     @Enumerated(EnumType.STRING)
     private SubscriptionPlan subscriptionPlan;
 
+    @OneToMany(mappedBy = "addedBy", cascade = CascadeType.ALL)
+    private List<Workout> addedWorkouts;
+
     public User() {
+        this.addedWorkouts = new ArrayList<>();
     }
 
     public Long getId() {
@@ -77,5 +82,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Workout> getAddedWorkouts() {
+        return addedWorkouts;
+    }
+
+    public void setAddedWorkouts(List<Workout> addedWorkouts) {
+        this.addedWorkouts = addedWorkouts;
     }
 }

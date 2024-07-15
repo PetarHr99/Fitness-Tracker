@@ -8,7 +8,7 @@ public class UserRegisterDTO {
     @Size(min = 5, max = 20)
     private String username;
 
-    @NotNull
+    @NotBlank
     @Email
     private String email;
 
