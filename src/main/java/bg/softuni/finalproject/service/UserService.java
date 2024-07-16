@@ -39,6 +39,10 @@ public class UserService {
         user.setAge(data.getAge());
         user.setPassword(passwordEncoder.encode(data.getPassword()));
         user.setSubscriptionPlan(data.getSubscriptionPlan());
+        user.setHeight(data.getHeight());
+        user.setWeight(data.getWeight());
+        user.setGender(data.getGender());
+        user.setTargetGoal(data.getTargetGoal());
 
         this.userRepository.save(user);
 

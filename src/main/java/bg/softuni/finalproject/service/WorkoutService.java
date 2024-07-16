@@ -1,6 +1,7 @@
 package bg.softuni.finalproject.service;
 
 import bg.softuni.finalproject.Entity.Exercise;
+import bg.softuni.finalproject.Entity.User;
 import bg.softuni.finalproject.Entity.Workout;
 import bg.softuni.finalproject.repo.ExerciseRepository;
 import bg.softuni.finalproject.repo.WorkoutRepository;
@@ -27,24 +28,13 @@ public class WorkoutService {
         return workoutRepository.findAll();
     }
 
-    public Optional<Workout> getWorkoutById(Long id) {
-        return workoutRepository.findById(id);
-    }
-
-    public Workout saveWorkout(WorkoutDTO workoutDTO) {
+    public Workout saveWorkout(WorkoutDTO workoutDTO, User currentUser) {
         Workout workout = new Workout();
         workout.setTitle(workoutDTO.getTitle());
         for (Exercise exercise : workoutDTO.getExercises()) {
             exercise.setWorkout(workout);
         }
         workout.setExercises(workoutDTO.getExercises());
-        return workoutRepository.save(workout);
-    }
-
-    public Workout updateWorkout(Workout workout) {
-        for (Exercise exercise : workout.getExercises()) {
-            exercise.setWorkout(workout);
-        }
         return workoutRepository.save(workout);
     }
 

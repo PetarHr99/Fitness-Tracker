@@ -34,13 +34,13 @@
                         <a class="nav-link" th:href="@{/login}">Login</a>
                     </li>
                     <li th:if="${@userSession.isLoggedIn()}" class="nav-item" >
-                        <a class="nav-link" th:href="@{/workouts}" >Workouts</a>
+                        <a class="nav-link" th:href="@{/workout-all/workouts}">Workouts</a>
                     </li>
                     <li th:if="${@userSession.isLoggedIn()}" class="nav-item" >
-                        <a class="nav-link" th:href="@{/meals-all/meals}" >Food Tracking</a>
+                        <a class="nav-link" th:href="@{/meals-all/meals}">Food Tracking</a>
                     </li>
                     <li th:if="${@userSession.isLoggedIn()}" class="nav-item" >
-                        <a class="nav-link" th:href="@{/activity-all/activity}" >Activities</a>
+                        <a class="nav-link" th:href="@{/activity-all/activity}">Activities</a>
                     </li>
                     <li th:if="${@userSession.isLoggedIn()}" class="nav-item" >
                         <a class="nav-link text-primary active h5 text-stroke" th:href="@{/logout}"> Logout </a>

@@ -19,7 +19,8 @@ public class Workout {
     private List<Exercise> exercises;
 
     @ManyToOne()
-    private User addedBy;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User workoutAddedBy;
 
     public Workout() {
         this.exercises = new ArrayList<>();
@@ -49,11 +50,11 @@ public class Workout {
         this.exercises = exercises;
     }
 
-    public User getAddedBy() {
-        return addedBy;
+    public User getWorkoutAddedBy() {
+        return workoutAddedBy;
     }
 
-    public void setAddedBy(User addedBy) {
-        this.addedBy = addedBy;
+    public void setWorkoutAddedBy(User workoutAddedBy) {
+        this.workoutAddedBy = workoutAddedBy;
     }
 }

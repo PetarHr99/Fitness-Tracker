@@ -1,7 +1,12 @@
 package bg.softuni.finalproject.web;
 
+import bg.softuni.finalproject.Entity.Meal;
+import bg.softuni.finalproject.Entity.User;
 import bg.softuni.finalproject.Entity.Workout;
+import bg.softuni.finalproject.config.UserSession;
+import bg.softuni.finalproject.service.UserService;
 import bg.softuni.finalproject.service.WorkoutService;
+import bg.softuni.finalproject.web.dto.MealDTO;
 import bg.softuni.finalproject.web.dto.WorkoutDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,65 +19,57 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/workouts")
 public class WorkoutController {
-
     private final WorkoutService workoutService;
+    private final UserService userService;
+    private final UserSession userSession;
 
     @Autowired
-    public WorkoutController(WorkoutService workoutService) {
+    public WorkoutController(WorkoutService workoutService, UserService userService, UserSession userSession) {
         this.workoutService = workoutService;
+        this.userService = userService;
+        this.userSession = userSession;
     }
 
-    @GetMapping
+    @ModelAttribute("workoutDTO")
+    public WorkoutDTO workoutDTO(){
+        return new WorkoutDTO();
+    }
+
+    @GetMapping("/workout-all/workouts")
     public String showWorkoutsPage(Model model) {
         model.addAttribute("workouts", workoutService.getAllWorkouts());
-        return "workouts";
+        return "/workout-all/workouts";
     }
 
-    @GetMapping("/add")
+    @GetMapping("/workout-all/add-workout")
     public String showAddWorkoutPage(Model model) {
-        model.addAttribute("workoutDTO", new WorkoutDTO());
-        return "add-workout";
+        model.addAttribute("workout", new WorkoutDTO());
+        return "/workout-all/add-workout";
     }
 
-    @PostMapping("/add")
-    public String addWorkout(@Valid @ModelAttribute("workoutDTO") WorkoutDTO workoutDTO,
-                             BindingResult bindingResult,
-                             RedirectAttributes redirectAttributes) {
-        if (bindingResult.hasErrors()) {
-            return "add-workout";
+    @PostMapping("/workout-all/add-workout")
+    public String saveWorkout(@Valid WorkoutDTO workoutDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
+            System.out.println("Binding error");
+            return "/workout-all/add-workout";
         }
-        Workout savedWorkout = workoutService.saveWorkout(workoutDTO);
-        return "redirect:/workouts/" + savedWorkout.getId();
-    }
-
-    @GetMapping("/edit/{id}")
-    public String showEditWorkoutPage(@PathVariable Long id, Model model) {
-        Optional<Workout> workoutOpt = workoutService.getWorkoutById(id);
-        if (workoutOpt.isPresent()) {
-            model.addAttribute("workout", workoutOpt.get());
-            return "edit-workout";
+        String username = userSession.getUsername();
+        if (username == null || !userSession.isLoggedIn()) {
+            return "redirect:/login";
         }
-        return "redirect:/workouts";
+
+        User currentUser = userService.findByUsername(username);
+        System.out.println("Received MealDTO: " + workoutDTO);
+        Workout workout = workoutService.saveWorkout(workoutDTO, currentUser);
+        return "redirect:/workout-all/workouts";
     }
 
-    @PostMapping("/edit/{id}")
-    public String editWorkout(@PathVariable Long id,
-                              @Valid @ModelAttribute("workout") Workout workout,
-                              BindingResult bindingResult,
-                              RedirectAttributes redirectAttributes) {
-        if (bindingResult.hasErrors()) {
-            return "edit-workout";
-        }
-        workoutService.updateWorkout(workout);
-        return "redirect:/workouts/" + workout.getId();
-    }
 
-    @PostMapping("/delete/{id}")
+    @PostMapping("/workouts/delete/{id}")
     public String deleteWorkout(@PathVariable Long id) {
         workoutService.deleteWorkout(id);
-        return "redirect:/workouts";
+        return "redirect:/workout-all/workouts";
     }
 }
 

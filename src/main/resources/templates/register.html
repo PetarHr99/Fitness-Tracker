@@ -108,6 +108,61 @@
                 </div>
             </div>
 
+            <div class="mb-3">
+                <label for="height" class="form-label">Height in cm</label>
+                <input  name="height"
+                        type="number"
+                        class="form-control"
+                        id="height"
+                        th:field="*{height}"
+                        th:errorclass="is-invalid"
+                        required min="0" max="300"
+                        aria-describedby="heightHelpInline">
+                <div th:if="${#fields.hasErrors('height')}" class="invalid-feedback">
+                    <small th:errors="*{height}"></small>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="weight" class="form-label">Weight in kg</label>
+                <input  name="weight"
+                        type="number"
+                        class="form-control"
+                        id="weight"
+                        th:field="*{weight}"
+                        th:errorclass="is-invalid"
+                        required min="0" max="1000"
+                        aria-describedby="weightHelpInline">
+                <div th:if="${#fields.hasErrors('weight')}" class="invalid-feedback">
+                    <small th:errors="*{weight}"></small>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="gender" class="form-label">Gender</label>
+                <select name="gender" class="form-control" id="gender" th:field="*{gender}" th:errorclass="is-invalid" required>
+                    <option value="" disabled selected>Select your gender</option>
+                    <option value="MALE">Male</option>
+                    <option value="FEMALE">Female</option>
+                    <option value="QUESTIONABLE">Gay, Lesbian, Etc.</option>
+                </select>
+                <div th:if="${#fields.hasErrors('gender')}" class="invalid-feedback">
+                    <small th:errors="*{gender}"></small>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="targetGoal" class="form-label">Set Target</label>
+                <select name="targetGoal" class="form-control" id="targetGoal" th:field="*{targetGoal}" th:errorclass="is-invalid" required>
+                    <option value="" disabled selected>Select your goal</option>
+                    <option value="LOSS">Loss of weight</option>
+                    <option value="GAIN">Gain muscle mass and strength</option>
+                    <option value="MAINTAIN">Maintain weight </option>
+                </select>
+                <div th:if="${#fields.hasErrors('targetGoal')}" class="invalid-feedback">
+                    <small th:errors="*{targetGoal}"></small>
+                </div>
+            </div>
         </div>
         <button type="submit" class="btn btn-primary">Register</button>
     </form>

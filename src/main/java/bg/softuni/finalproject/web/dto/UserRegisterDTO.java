@@ -1,6 +1,8 @@
 package bg.softuni.finalproject.web.dto;
 
+import bg.softuni.finalproject.Entity.Gender;
 import bg.softuni.finalproject.Entity.SubscriptionPlan;
+import bg.softuni.finalproject.Entity.TargetGoal;
 import jakarta.validation.constraints.*;
 
 public class UserRegisterDTO {
@@ -24,7 +26,15 @@ public class UserRegisterDTO {
 
     private SubscriptionPlan subscriptionPlan;
 
+    @Min(0)
+    @Max(300)
+    private Integer height;
+    @Min(0)
+    @Max(1000)
+    private Double weight;
 
+    private Gender gender;
+    private TargetGoal targetGoal;
     public UserRegisterDTO() {
     }
 
@@ -73,5 +83,37 @@ public class UserRegisterDTO {
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public TargetGoal getTargetGoal() {
+        return targetGoal;
+    }
+
+    public void setTargetGoal(TargetGoal targetGoal) {
+        this.targetGoal = targetGoal;
     }
 }

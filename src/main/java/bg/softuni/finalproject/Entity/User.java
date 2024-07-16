@@ -28,8 +28,17 @@ public class User {
     @Column(nullable = false, unique = true)
     @Enumerated(EnumType.STRING)
     private SubscriptionPlan subscriptionPlan;
-
-    @OneToMany(mappedBy = "addedBy", cascade = CascadeType.ALL)
+    @Column(nullable = false)
+    private Integer height;
+    @Column(nullable = false)
+    private Double weight;
+    @Column(nullable = false, unique = true)
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+    @Column(nullable = false, unique = true)
+    @Enumerated(EnumType.STRING)
+    private TargetGoal targetGoal;
+    @OneToMany(mappedBy = "workoutAddedBy", cascade = CascadeType.ALL)
     private List<Workout> addedWorkouts;
 
     @OneToMany(mappedBy = "addedByUser", cascade = CascadeType.ALL)
@@ -114,5 +123,37 @@ public class User {
 
     public void setAddedMeals(List<Meal> addedMeals) {
         this.addedMeals = addedMeals;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public TargetGoal getTargetGoal() {
+        return targetGoal;
+    }
+
+    public void setTargetGoal(TargetGoal targetGoal) {
+        this.targetGoal = targetGoal;
     }
 }

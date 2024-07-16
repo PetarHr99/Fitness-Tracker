@@ -51,10 +51,6 @@ public class MealController {
 
         if (bindingResult.hasErrors()){
             System.out.println("Binding error");
-            System.out.println(bindingResult.getFieldErrorCount());
-            System.out.println(bindingResult.getFieldErrors());
-            bindingResult.getFieldErrors().forEach(err -> System.out.println(err.getField()));
-
             return "/meals-all/add-meals";
         }
 
