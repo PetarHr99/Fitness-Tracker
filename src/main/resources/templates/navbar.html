@@ -37,10 +37,10 @@
                         <a class="nav-link" th:href="@{/workouts}" >Workouts</a>
                     </li>
                     <li th:if="${@userSession.isLoggedIn()}" class="nav-item" >
-                        <a class="nav-link" th:href="@{/calories}" >Food Tracking</a>
+                        <a class="nav-link" th:href="@{/meals-all/meals}" >Food Tracking</a>
                     </li>
                     <li th:if="${@userSession.isLoggedIn()}" class="nav-item" >
-                        <a class="nav-link" th:href="@{/activities}" >Activities</a>
+                        <a class="nav-link" th:href="@{/activity-all/activity}" >Activities</a>
                     </li>
                     <li th:if="${@userSession.isLoggedIn()}" class="nav-item" >
                         <a class="nav-link text-primary active h5 text-stroke" th:href="@{/logout}"> Logout </a>

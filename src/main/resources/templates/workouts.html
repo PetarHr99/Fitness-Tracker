@@ -14,7 +14,7 @@
 <!-- Workouts Page Content -->
 <div class="container my-5">
     <h2 class="text-center">Workouts</h2>
-    <a href="/workouts/add" class="btn btn-primary mb-3">Add Workout</a>
+    <a href="/workouts/add" class="btn btn-primary mb-3">Add New Workout</a>
     <div class="list-group">
         <div th:each="workout : ${workouts}" class="list-group-item">
             <h5 th:text="${workout.title}">Workout Title</h5>
@@ -24,6 +24,7 @@
             </form>
         </div>
     </div>
+    <h2 class="text-center">Saved Workouts</h2>
 </div>
 
 <!-- Footer -->

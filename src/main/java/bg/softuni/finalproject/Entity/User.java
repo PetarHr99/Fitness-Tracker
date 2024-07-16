@@ -32,8 +32,16 @@ public class User {
     @OneToMany(mappedBy = "addedBy", cascade = CascadeType.ALL)
     private List<Workout> addedWorkouts;
 
+    @OneToMany(mappedBy = "addedByUser", cascade = CascadeType.ALL)
+    private List<Activity> addedActivities;
+
+    @OneToMany(mappedBy = "mealsAddedBy", cascade = CascadeType.ALL)
+    private List<Meal> addedMeals;
+
     public User() {
         this.addedWorkouts = new ArrayList<>();
+        this.addedActivities = new ArrayList<>();
+        this.addedMeals = new ArrayList<>();
     }
 
     public Long getId() {
@@ -90,5 +98,21 @@ public class User {
 
     public void setAddedWorkouts(List<Workout> addedWorkouts) {
         this.addedWorkouts = addedWorkouts;
+    }
+
+    public List<Activity> getAddedActivities() {
+        return addedActivities;
+    }
+
+    public void setAddedActivities(List<Activity> addedActivities) {
+        this.addedActivities = addedActivities;
+    }
+
+    public List<Meal> getAddedMeals() {
+        return addedMeals;
+    }
+
+    public void setAddedMeals(List<Meal> addedMeals) {
+        this.addedMeals = addedMeals;
     }
 }
