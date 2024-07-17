@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fitness Tracker App</title>
+    <title th:text="#{title.index}">Fitness Tracker App</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -15,11 +15,11 @@
 <!-- Hero Section -->
 <section class="jumbotron text-center bg-primary text-white py-5">
     <div class="container">
-        <h1 class="jumbotron-heading">Welcome to Fitness Tracker</h1>
-        <p class="lead">Track your workouts, diet, and progress all in one place.</p>
+        <h1 class="jumbotron-heading" th:text="#{hero.welcome}">Welcome to Fitness Tracker</h1>
+        <p class="lead" th:text="#{hero.description}">Track your workouts, diet, and progress all in one place.</p>
         <p>
-            <a th:href="@{/register}" class="btn btn-secondary my-2">Get Started</a>
-            <a th:href="@{/features}" class="btn btn-light my-2">Learn More</a>
+            <a th:href="@{/register}" class="btn btn-secondary my-2" th:text="#{hero.getStarted}">Get Started</a>
+            <a th:href="@{/features}" class="btn btn-light my-2" th:text="#{hero.learnMore}">Learn More</a>
         </p>
     </div>
 </section>
@@ -31,9 +31,9 @@
             <div class="card mb-4 shadow-sm">
                 <img src="https://via.placeholder.com/150" class="card-img-top" alt="Workout Tracking">
                 <div class="card-body">
-                    <h5 class="card-title">Workout Tracking</h5>
-                    <p class="card-text">Log your workouts and track your progress over time.</p>
-                    <a th:href="@{/features}" class="btn btn-primary">Learn More</a>
+                    <h5 class="card-title" th:text="#{features.index.workoutTracking.title}">Workout Tracking</h5>
+                    <p class="card-text" th:text="#{features.index.workoutTracking.description}">Log your workouts and track your progress over time.</p>
+                    <a th:href="@{/features}" class="btn btn-primary" th:text="#{features.learnMore}">Learn More</a>
                 </div>
             </div>
         </div>
@@ -41,9 +41,9 @@
             <div class="card mb-4 shadow-sm">
                 <img src="https://via.placeholder.com/150" class="card-img-top" alt="Diet Tracking">
                 <div class="card-body">
-                    <h5 class="card-title">Diet Tracking</h5>
-                    <p class="card-text">Keep track of your daily food intake and nutritional information.</p>
-                    <a th:href="@{/features}" class="btn btn-primary">Learn More</a>
+                    <h5 class="card-title" th:text="#{features.index.dietTracking.title}">Diet Tracking</h5>
+                    <p class="card-text" th:text="#{features.index.dietTracking.description}">Keep track of your daily food intake and nutritional information.</p>
+                    <a th:href="@{/features}" class="btn btn-primary" th:text="#{features.learnMore}">Learn More</a>
                 </div>
             </div>
         </div>
@@ -51,14 +51,15 @@
             <div class="card mb-4 shadow-sm">
                 <img src="https://via.placeholder.com/150" class="card-img-top" alt="Progress Monitoring">
                 <div class="card-body">
-                    <h5 class="card-title">Progress Monitoring</h5>
-                    <p class="card-text">Monitor your fitness journey and see your improvements.</p>
-                    <a th:href="@{/features}" class="btn btn-primary">Learn More</a>
+                    <h5 class="card-title" th:text="#{features.index.progressMonitoring.title}">Progress Monitoring</h5>
+                    <p class="card-text" th:text="#{features.index.progressMonitoring.description}">Monitor your fitness journey and see your improvements.</p>
+                    <a th:href="@{/features}" class="btn btn-primary" th:text="#{features.learnMore}">Learn More</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <!-- Footer -->
 <div th:replace="footer :: footer"></div>

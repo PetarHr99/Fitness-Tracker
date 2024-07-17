@@ -1,8 +1,8 @@
 package bg.softuni.finalproject.web.dto;
 
-import bg.softuni.finalproject.Entity.Gender;
-import bg.softuni.finalproject.Entity.SubscriptionPlan;
-import bg.softuni.finalproject.Entity.TargetGoal;
+import bg.softuni.finalproject.Entity.enums.Gender;
+import bg.softuni.finalproject.Entity.enums.SubscriptionPlan;
+import bg.softuni.finalproject.Entity.enums.TargetGoal;
 import jakarta.validation.constraints.*;
 
 public class UserRegisterDTO {

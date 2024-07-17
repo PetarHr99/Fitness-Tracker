@@ -1,4 +1,4 @@
-package bg.softuni.finalproject.Entity;
+package bg.softuni.finalproject.Entity.enums;
 
 public enum SubscriptionPlan {
     WEEKLY,

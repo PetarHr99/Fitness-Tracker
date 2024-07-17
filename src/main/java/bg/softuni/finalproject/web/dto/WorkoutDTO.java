@@ -3,6 +3,7 @@ package bg.softuni.finalproject.web.dto;
 import bg.softuni.finalproject.Entity.Exercise;
 import jakarta.validation.constraints.NotEmpty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WorkoutDTO {
@@ -12,6 +13,7 @@ public class WorkoutDTO {
     private List<Exercise> exercises;
 
     public WorkoutDTO() {
+        this.exercises = new ArrayList<>();
     }
 
     public String getTitle() {

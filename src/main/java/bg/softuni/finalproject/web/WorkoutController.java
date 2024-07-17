@@ -38,7 +38,9 @@ public class WorkoutController {
 
     @GetMapping("/workout-all/workouts")
     public String showWorkoutsPage(Model model) {
-        model.addAttribute("workouts", workoutService.getAllWorkouts());
+        String username = userSession.getUsername();
+        User currentUser = userService.findByUsername(username);
+        model.addAttribute("workouts", workoutService.getWorkoutsByUser(currentUser));
         return "/workout-all/workouts";
     }
 

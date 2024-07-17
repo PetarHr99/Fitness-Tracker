@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Meal - Fitness Tracker</title>
+    <title th:text="#{title.addMeal}">Add Meal - Fitness Tracker</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -13,31 +13,31 @@
 
 <!-- Add Activity Page Content -->
 <div class="container my-5">
-    <h2 class="text-center">Add Meal</h2>
+    <h2 class="text-center" th:text="#{addMeal.heading}">Add Meal</h2>
     <form th:action="@{/meals-all/add-meals}" th:object="${mealDTO}" method="POST">
         <div class="mb-3">
-            <label for="breakfast" class="form-label">Breakfast</label>
-            <input type="text" class="form-control" id="breakfast" th:field="*{breakfast}" >
+            <label for="breakfast" class="form-label" th:text="#{addMeal.breakfast}">Breakfast</label>
+            <input type="text" class="form-control" id="breakfast" th:field="*{breakfast}">
         </div>
         <div class="mb-3">
-            <label for="lunch" class="form-label">Lunch</label>
-            <input type="text" class="form-control" id="lunch" th:field="*{lunch}" >
+            <label for="lunch" class="form-label" th:text="#{addMeal.lunch}">Lunch</label>
+            <input type="text" class="form-control" id="lunch" th:field="*{lunch}">
         </div>
         <div class="mb-3">
-            <label for="dinner" class="form-label">Dinner</label>
-            <input type="text" class="form-control" id="dinner" th:field="*{dinner}" >
+            <label for="dinner" class="form-label" th:text="#{addMeal.dinner}">Dinner</label>
+            <input type="text" class="form-control" id="dinner" th:field="*{dinner}">
         </div>
         <div class="mb-3">
-            <label for="snack" class="form-label">Snack</label>
-            <input type="text" class="form-control" id="snack" th:field="*{snack}" >
+            <label for="snack" class="form-label" th:text="#{addMeal.snack}">Snack</label>
+            <input type="text" class="form-control" id="snack" th:field="*{snack}">
         </div>
 
         <div class="mb-3">
-            <label for="total-calories" class="form-label">Total Calories</label>
+            <label for="total-calories" class="form-label" th:text="#{addMeal.totalCalories}">Total Calories</label>
             <input type="number" class="form-control" id="total-calories" th:field="*{totalCalories}" required>
         </div>
 
-        <button type="submit" class="btn btn-primary">Save Meals</button>
+        <button type="submit" class="btn btn-primary" th:text="#{addMeal.save}">Save Meal</button>
     </form>
 </div>
 <!-- Footer -->

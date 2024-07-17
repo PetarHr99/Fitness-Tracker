@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class WorkoutService {
@@ -27,14 +28,27 @@ public class WorkoutService {
     public List<Workout> getAllWorkouts() {
         return workoutRepository.findAll();
     }
+    public List<Workout> getWorkoutsByUser(User user) {
+        return workoutRepository.findByWorkoutAddedBy(user);
+    }
 
-    public Workout saveWorkout(WorkoutDTO workoutDTO, User currentUser) {
+    public Workout saveWorkout(WorkoutDTO workoutDTO, User user) {
         Workout workout = new Workout();
         workout.setTitle(workoutDTO.getTitle());
-        for (Exercise exercise : workoutDTO.getExercises()) {
+        workout.setWorkoutAddedBy(user);
+
+        List<Exercise> exercises = workoutDTO.getExercises().stream().map(dto -> {
+            Exercise exercise = new Exercise();
             exercise.setWorkout(workout);
-        }
-        workout.setExercises(workoutDTO.getExercises());
+            exercise.setName(dto.getName());
+            exercise.setSets(dto.getSets());
+            exercise.setReps(dto.getReps());
+            exercise.setWeight(dto.getWeight());
+            return exercise;
+        }).collect(Collectors.toList());
+
+        workout.setExercises(exercises);
+
         return workoutRepository.save(workout);
     }
 

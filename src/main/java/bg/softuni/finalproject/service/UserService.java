@@ -1,7 +1,7 @@
 package bg.softuni.finalproject.service;
 
-import bg.softuni.finalproject.Entity.Gender;
-import bg.softuni.finalproject.Entity.TargetGoal;
+import bg.softuni.finalproject.Entity.enums.Gender;
+import bg.softuni.finalproject.Entity.enums.TargetGoal;
 import bg.softuni.finalproject.Entity.User;
 import bg.softuni.finalproject.config.UserSession;
 import bg.softuni.finalproject.repo.UserRepository;

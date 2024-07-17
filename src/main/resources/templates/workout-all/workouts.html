@@ -19,6 +19,12 @@
     <div class="list-group">
         <div th:each="workout : ${workouts}" class="list-group-item">
             <h5 th:text="${workout.title}">Workout Title</h5>
+            <div th:each="exercise : ${workout.exercises}">
+                <p><strong>Exercise:</strong> <span th:text="${exercise.name}">Exercise Name</span></p>
+                <p><strong>Sets:</strong> <span th:text="${exercise.sets}">0</span></p>
+                <p><strong>Reps:</strong> <span th:text="${exercise.reps}">0</span></p>
+                <p><strong>Weight:</strong> <span th:text="${exercise.weight}">0.0</span> kg</p>
+            </div>
             <a th:href="@{/workouts/edit/{id}(id=${workout.id})}" class="btn btn-secondary">Edit</a>
             <form th:action="@{/workouts/delete/{id}(id=${workout.id})}" method="post" class="d-inline">
                 <button type="submit" class="btn btn-danger">Delete</button>
