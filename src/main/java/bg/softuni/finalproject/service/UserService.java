@@ -1,5 +1,7 @@
 package bg.softuni.finalproject.service;
 
+import bg.softuni.finalproject.Entity.Gender;
+import bg.softuni.finalproject.Entity.TargetGoal;
 import bg.softuni.finalproject.Entity.User;
 import bg.softuni.finalproject.config.UserSession;
 import bg.softuni.finalproject.repo.UserRepository;
@@ -75,7 +77,28 @@ public class UserService {
     public void updateCurrentWeight(String username, double currentWeight) {
         User user = findByUsername(username);
         user.setCurrentWeight(currentWeight);
+        user.setCurrentCalorieIntake(calculateRecommendedCalories(user));
         userRepository.save(user);
+    }
+
+    private Double calculateRecommendedCalories(User user) {
+        int age = user.getAge();
+        double currentWeight = user.getCurrentWeight();
+        double recommendedCalories;
+
+        if (user.getGender() == Gender.MALE) {
+            recommendedCalories = 10 * currentWeight + 6.25 * user.getHeight() - 5 * age + 5;
+        } else {
+            recommendedCalories = 10 * currentWeight + 6.25 * user.getHeight() - 5 * age - 161;
+        }
+
+        if (user.getTargetGoal() == TargetGoal.LOSS) {
+            recommendedCalories -= 300;
+        } else if (user.getTargetGoal() == TargetGoal.GAIN) {
+            recommendedCalories += 300;
+        }
+
+        return recommendedCalories;
     }
 
 

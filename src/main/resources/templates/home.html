@@ -26,8 +26,8 @@
                     <p><strong>Weight:</strong> <span id="weight"></span> kg</p>
                     <p><strong>Height:</strong> <span id="height"></span> cm</p>
                     <p><strong>Gender:</strong> <span id="gender"></span></p>
-                    <p><strong>Current Weight:</strong> <span id="currentWeightt"></span> kg</p>
-                    <p><strong>Current Calorie Intake:</strong> <span id="recommendedCalories"></span> kcal/day</p>
+                    <p><strong>Current Weight:</strong> <span id="currentWeightStart"></span> kg</p>
+                    <p><strong>Current Calorie Intake:</strong> <span id="currentCalorieIntakeStart"></span> kcal/day</p>
 
                 </div>
             </div>
@@ -62,6 +62,18 @@
                     <p><strong>Total Calories:</strong> <span id="totalCalories"></span></p>
                 </div>
             </div>
+
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h4>Last Activity</h4>
+                </div>
+                <div class="card-body">
+                    <p><strong>Type of Activity:</strong> <span id="typeOfActivity"></span></p>
+                    <p><strong>Date of Activity:</strong> <span id="dateOfActivity"></span></p>
+                    <p><strong>Calories Burned:</strong> <span id="activityCalories"></span> kcal</p>
+                    <p><strong>Time of Training:</strong> <span id="timeOfTraining"></span></p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -80,9 +92,8 @@
         document.getElementById('weight').textContent = data.weight;
         document.getElementById('height').textContent = data.height;
         document.getElementById('gender').textContent = data.gender;
-        document.getElementById('currentWeightt').textContent = data.weight;
-        document.getElementById('currentCalorieIntake').textContent = data.recommendedCalories;
-
+        document.getElementById('currentWeightStart').textContent = data.currentWeight;
+        document.getElementById('currentCalorieIntakeStart').textContent = data.recommendedCalories;
 
         if (data.lastMeal) {
             document.getElementById('breakfast').textContent = data.lastMeal.breakfast || 'N/A';
@@ -97,6 +108,18 @@
             document.getElementById('snack').textContent = 'N/A';
             document.getElementById('totalCalories').textContent = 'N/A';
         }
+
+        if (data.lastActivity) {
+            document.getElementById('typeOfActivity').textContent = data.lastActivity.typeOfActivity || 'N/A';
+            document.getElementById('dateOfActivity').textContent = data.lastActivity.dateOfActivity || 'N/A';
+            document.getElementById('activityCalories').textContent = data.lastActivity.calories || 'N/A';
+            document.getElementById('timeOfTraining').textContent = data.lastActivity.timeOfTraining || 'N/A';
+        } else {
+            document.getElementById('typeOfActivity').textContent = 'N/A';
+            document.getElementById('dateOfActivity').textContent = 'N/A';
+            document.getElementById('activityCalories').textContent = 'N/A';
+            document.getElementById('timeOfTraining').textContent = 'N/A';
+        }
     }
 
     fetchDashboard();
@@ -104,14 +127,21 @@
         event.preventDefault();
         const currentWeight = document.getElementById('currentWeight').value;
 
-        const response = await fetch('/api/dashboard/current-data?currentWeight=' + currentWeight, {
-            method: 'POST'
+        const response = await fetch('/api/dashboard/current-data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({currentWeight})
         });
         const data = await response.json();
 
         document.getElementById('currentWeightDisplay').textContent = data.currentWeight;
         document.getElementById('weightDifference').textContent = data.weightDifference;
-        document.getElementById('recommendedCalories').textContent = data.recommendedCalories;
+        document.getElementById('recommendedCaloriesDisplay').textContent = data.recommendedCalories;
+
+        document.getElementById('currentWeightStart').textContent = data.currentWeight;
+        document.getElementById('currentCalorieIntakeStart').textContent = data.recommendedCalories;
     });
 
 </script>

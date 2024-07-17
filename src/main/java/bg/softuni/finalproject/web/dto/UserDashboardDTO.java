@@ -6,23 +6,16 @@ public class UserDashboardDTO {
     private Double weight;
     private Integer height;
     private String gender;
+    private Double currentWeight;
     private Double weightDifference;
     private Double recommendedCalories;
-    private Double currentWeight;
-    private Double currentCalorieIntake;
     private MealDTO lastMeal;
+    private ActivityDTO lastActivity;
 
 
     public UserDashboardDTO() {
     }
 
-    public Double getCurrentCalorieIntake() {
-        return currentCalorieIntake;
-    }
-
-    public void setCurrentCalorieIntake(Double currentCalorieIntake) {
-        this.currentCalorieIntake = currentCalorieIntake;
-    }
 
     public Double getCurrentWeight() {
         return currentWeight;
@@ -94,5 +87,13 @@ public class UserDashboardDTO {
 
     public void setRecommendedCalories(Double recommendedCalories) {
         this.recommendedCalories = recommendedCalories;
+    }
+
+    public ActivityDTO getLastActivity() {
+        return lastActivity;
+    }
+
+    public void setLastActivity(ActivityDTO lastActivity) {
+        this.lastActivity = lastActivity;
     }
 }
