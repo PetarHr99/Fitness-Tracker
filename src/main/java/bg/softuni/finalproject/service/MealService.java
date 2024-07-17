@@ -33,4 +33,8 @@ public class MealService {
     public void deleteMeal(Long id) {
         mealRepository.deleteById(id);
     }
+
+    public Meal findLastMealByUser(User user) {
+        return mealRepository.findTopByMealsAddedByOrderByIdDesc(user);
+    }
 }

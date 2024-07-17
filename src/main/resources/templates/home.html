@@ -15,17 +15,53 @@
 <div class="container my-5">
     <h2 class="text-center">Welcome, <span th:text="${username}"> User </span></h2>
     <div class="row mt-4">
-        <div class="col-md-3">
-            <a href="/goals" class="btn btn-primary btn-block">Goals</a>
-        </div>
-        <div class="col-md-3">
-            <a href="/activities" class="btn btn-primary btn-block">Activities</a>
-        </div>
-        <div class="col-md-3">
-            <a href="/workouts" class="btn btn-primary btn-block">Workouts</a>
-        </div>
-        <div class="col-md-3">
-            <a href="/calories" class="btn btn-primary btn-block">Calories</a>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Start data</h4>
+                </div>
+                <div class="card-body">
+                    <p><strong>Goal:</strong> <span id="targetGoal"></span></p>
+                    <p><strong>Age:</strong> <span id="age"></span></p>
+                    <p><strong>Weight:</strong> <span id="weight"></span> kg</p>
+                    <p><strong>Height:</strong> <span id="height"></span> cm</p>
+                    <p><strong>Gender:</strong> <span id="gender"></span></p>
+                    <p><strong>Current Weight:</strong> <span id="currentWeightt"></span> kg</p>
+                    <p><strong>Current Calorie Intake:</strong> <span id="recommendedCalories"></span> kcal/day</p>
+
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h4>Current Data</h4>
+                </div>
+                <div class="card-body">
+                    <form id="currentDataForm">
+                        <div class="mb-3">
+                            <label for="currentWeight" class="form-label">Current Weight (kg)</label>
+                            <input type="number" class="form-control" id="currentWeight" name="currentWeight" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                    <p class="mt-3"><strong>Current Weight:</strong> <span id="currentWeightDisplay"></span> kg</p>
+                    <p><strong>Weight Difference:</strong> <span id="weightDifference"></span> kg</p>
+                    <p><strong>Recommended Calorie Intake:</strong> <span id="recommendedCaloriesDisplay"></span> kcal/day</p>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h4>Last Meal</h4>
+                </div>
+                <div class="card-body">
+                    <p><strong>Breakfast:</strong> <span id="breakfast"></span></p>
+                    <p><strong>Lunch:</strong> <span id="lunch"></span></p>
+                    <p><strong>Dinner:</strong> <span id="dinner"></span></p>
+                    <p><strong>Snack:</strong> <span id="snack"></span></p>
+                    <p><strong>Total Calories:</strong> <span id="totalCalories"></span></p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -34,5 +70,50 @@
 <div th:replace="footer :: footer"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    async function fetchDashboard() {
+        const response = await fetch('/api/dashboard');
+        const data = await response.json();
+
+        document.getElementById('targetGoal').textContent = data.targetGoal;
+        document.getElementById('age').textContent = data.age;
+        document.getElementById('weight').textContent = data.weight;
+        document.getElementById('height').textContent = data.height;
+        document.getElementById('gender').textContent = data.gender;
+        document.getElementById('currentWeightt').textContent = data.weight;
+        document.getElementById('currentCalorieIntake').textContent = data.recommendedCalories;
+
+
+        if (data.lastMeal) {
+            document.getElementById('breakfast').textContent = data.lastMeal.breakfast || 'N/A';
+            document.getElementById('lunch').textContent = data.lastMeal.lunch || 'N/A';
+            document.getElementById('dinner').textContent = data.lastMeal.dinner || 'N/A';
+            document.getElementById('snack').textContent = data.lastMeal.snack || 'N/A';
+            document.getElementById('totalCalories').textContent = data.lastMeal.totalCalories || 'N/A';
+        } else {
+            document.getElementById('breakfast').textContent = 'N/A';
+            document.getElementById('lunch').textContent = 'N/A';
+            document.getElementById('dinner').textContent = 'N/A';
+            document.getElementById('snack').textContent = 'N/A';
+            document.getElementById('totalCalories').textContent = 'N/A';
+        }
+    }
+
+    fetchDashboard();
+    document.getElementById('currentDataForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const currentWeight = document.getElementById('currentWeight').value;
+
+        const response = await fetch('/api/dashboard/current-data?currentWeight=' + currentWeight, {
+            method: 'POST'
+        });
+        const data = await response.json();
+
+        document.getElementById('currentWeightDisplay').textContent = data.currentWeight;
+        document.getElementById('weightDifference').textContent = data.weightDifference;
+        document.getElementById('recommendedCalories').textContent = data.recommendedCalories;
+    });
+
+</script>
 </body>
 </html>

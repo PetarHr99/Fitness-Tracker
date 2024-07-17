@@ -71,4 +71,17 @@ public class UserService {
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
+    public void updateCurrentWeight(String username, double currentWeight) {
+        User user = findByUsername(username);
+        user.setCurrentWeight(currentWeight);
+        userRepository.save(user);
+    }
+
+
+    public void updateCurrentCalorieIntake(String username, double currentCalorieIntake) {
+        User user = findByUsername(username);
+        user.setCurrentCalorieIntake(currentCalorieIntake);
+        userRepository.save(user);
+    }
 }

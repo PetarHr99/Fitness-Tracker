@@ -47,10 +47,29 @@ public class User {
     @OneToMany(mappedBy = "mealsAddedBy", cascade = CascadeType.ALL)
     private List<Meal> addedMeals;
 
+    private Double currentWeight;
+    private Double currentCalorieIntake;
+
+    public Double getCurrentCalorieIntake() {
+        return currentCalorieIntake;
+    }
+
+    public void setCurrentCalorieIntake(Double currentCalorieIntake) {
+        this.currentCalorieIntake = currentCalorieIntake;
+    }
+
     public User() {
         this.addedWorkouts = new ArrayList<>();
         this.addedActivities = new ArrayList<>();
         this.addedMeals = new ArrayList<>();
+    }
+
+    public Double getCurrentWeight() {
+        return currentWeight;
+    }
+
+    public void setCurrentWeight(Double currentWeight) {
+        this.currentWeight = currentWeight;
     }
 
     public Long getId() {

@@ -34,6 +34,9 @@
                         <a class="nav-link" th:href="@{/login}">Login</a>
                     </li>
                     <li th:if="${@userSession.isLoggedIn()}" class="nav-item" >
+                        <a class="nav-link" th:href="@{/home}">Dashboard</a>
+                    </li>
+                    <li th:if="${@userSession.isLoggedIn()}" class="nav-item" >
                         <a class="nav-link" th:href="@{/workout-all/workouts}">Workouts</a>
                     </li>
                     <li th:if="${@userSession.isLoggedIn()}" class="nav-item" >

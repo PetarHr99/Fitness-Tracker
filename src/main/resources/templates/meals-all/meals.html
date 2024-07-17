@@ -18,7 +18,6 @@
     <h2 class="text-center">Past Meals</h2>
     <div class="list-group">
         <div th:each="meal : ${meals}" class="list-group-item">
-            <h5 th:text="${meal.id}">1</h5>
             <h5 th:text="${meal.breakfast}"></h5>
             <h5 th:text="${meal.lunch}"></h5>
             <h5 th:text="${meal.dinner}"></h5>
