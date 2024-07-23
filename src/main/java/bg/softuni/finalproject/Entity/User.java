@@ -52,12 +52,6 @@ public class User {
     private Double currentWeight;
     private Double currentCalorieIntake;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
 
     public Double getCurrentCalorieIntake() {
         return currentCalorieIntake;
@@ -71,6 +65,7 @@ public class User {
         this.addedWorkouts = new ArrayList<>();
         this.addedActivities = new ArrayList<>();
         this.addedMeals = new ArrayList<>();
+
     }
 
     public Double getCurrentWeight() {
@@ -184,4 +179,5 @@ public class User {
     public void setTargetGoal(TargetGoal targetGoal) {
         this.targetGoal = targetGoal;
     }
+
 }
