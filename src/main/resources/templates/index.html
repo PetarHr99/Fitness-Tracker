@@ -56,7 +56,7 @@
     <div class="row">
         <div class="col-lg-4">
             <div class="card mb-4 shadow-sm" style="border-color: #8B4513;"> <!-- Inline CSS for card border color -->
-                <img src="https://via.placeholder.com/150" class="card-img-top" alt="Workout Tracking">
+                <img th:src="@{/img/carousel-1.png}" class="card-img-top" alt="Workout Tracking"> <!-- Insert your first image here -->
                 <div class="card-body">
                     <h5 class="card-title" th:text="#{features.index.workoutTracking.title}" style="color: #8B4513;">Workout Tracking</h5> <!-- Inline CSS for text color -->
                     <p class="card-text" th:text="#{features.index.workoutTracking.description}" style="color: #8B4513;">Log your workouts and track your progress over time.</p> <!-- Inline CSS for text color -->
@@ -66,7 +66,7 @@
         </div>
         <div class="col-lg-4">
             <div class="card mb-4 shadow-sm" style="border-color: #8B4513;"> <!-- Inline CSS for card border color -->
-                <img src="https://via.placeholder.com/150" class="card-img-top" alt="Diet Tracking">
+                <img th:src="@{/img/diet-tracker.png}" class="card-img-top" alt="Diet Tracking"> <!-- Insert your second image here -->
                 <div class="card-body">
                     <h5 class="card-title" th:text="#{features.index.dietTracking.title}" style="color: #8B4513;">Diet Tracking</h5> <!-- Inline CSS for text color -->
                     <p class="card-text" th:text="#{features.index.dietTracking.description}" style="color: #8B4513;">Keep track of your daily food intake and nutritional information.</p> <!-- Inline CSS for text color -->
@@ -76,7 +76,7 @@
         </div>
         <div class="col-lg-4">
             <div class="card mb-4 shadow-sm" style="border-color: #8B4513;"> <!-- Inline CSS for card border color -->
-                <img src="https://via.placeholder.com/150" class="card-img-top" alt="Progress Monitoring">
+                <img th:src="@{/img/progress.png}" class="card-img-top" alt="Progress Monitoring"> <!-- Insert your third image here -->
                 <div class="card-body">
                     <h5 class="card-title" th:text="#{features.index.progressMonitoring.title}" style="color: #8B4513;">Progress Monitoring</h5> <!-- Inline CSS for text color -->
                     <p class="card-text" th:text="#{features.index.progressMonitoring.description}" style="color: #8B4513;">Monitor your fitness journey and see your improvements.</p> <!-- Inline CSS for text color -->
