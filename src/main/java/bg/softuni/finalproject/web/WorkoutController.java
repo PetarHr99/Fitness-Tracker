@@ -1,32 +1,35 @@
 package bg.softuni.finalproject.web;
 
-import bg.softuni.finalproject.Entity.Meal;
+
 import bg.softuni.finalproject.Entity.User;
 import bg.softuni.finalproject.Entity.Workout;
 import bg.softuni.finalproject.config.UserSession;
+import bg.softuni.finalproject.exercises.Exercise;
+import bg.softuni.finalproject.exercises.ExerciseDTO;
+import bg.softuni.finalproject.exercises.ExerciseService;
 import bg.softuni.finalproject.service.UserService;
 import bg.softuni.finalproject.service.WorkoutService;
-import bg.softuni.finalproject.web.dto.MealDTO;
 import bg.softuni.finalproject.web.dto.WorkoutDTO;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Optional;
+import java.util.*;
+
 
 @Controller
+@SessionAttributes({"workoutDTO", "exerciseDTOList"})
 public class WorkoutController {
     private final WorkoutService workoutService;
+    private final ExerciseService exerciseService;
     private final UserService userService;
     private final UserSession userSession;
 
-    @Autowired
-    public WorkoutController(WorkoutService workoutService, UserService userService, UserSession userSession) {
+    public WorkoutController(WorkoutService workoutService, ExerciseService exerciseService, UserService userService, UserSession userSession) {
         this.workoutService = workoutService;
+        this.exerciseService = exerciseService;
         this.userService = userService;
         this.userSession = userSession;
     }
@@ -36,42 +39,101 @@ public class WorkoutController {
         return new WorkoutDTO();
     }
 
-    @GetMapping("/workout-all/workouts")
-    public String showWorkoutsPage(Model model) {
-        String username = userSession.getUsername();
-        User currentUser = userService.findByUsername(username);
-        model.addAttribute("workouts", workoutService.getWorkoutsByUser(currentUser));
-        return "/workout-all/workouts";
+    @ModelAttribute("exerciseDTOList")
+    public List<ExerciseDTO> exerciseDTOList() {
+        return new ArrayList<>();
     }
 
-    @GetMapping("/workout-all/add-workout")
-    public String showAddWorkoutPage(Model model) {
-        model.addAttribute("workout", new WorkoutDTO());
-        return "/workout-all/add-workout";
-    }
+    //HOME WORKOUT ----------------------------------------------------------
 
-    @PostMapping("/workout-all/add-workout")
-    public String saveWorkout(@Valid WorkoutDTO workoutDTO, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()){
-            System.out.println("Binding error");
-            return "/workout-all/add-workout";
-        }
-        String username = userSession.getUsername();
-        if (username == null || !userSession.isLoggedIn()) {
+    @GetMapping("/workout-all/workout-home")
+    public String viewHomeWorkout(Model model){
+        if (!userSession.isLoggedIn()){
             return "redirect:/login";
         }
+        User user = userService.findByUsername(userSession.getUsername());
+        List<Workout> workoutList = workoutService.findByUser(user);
 
-        User currentUser = userService.findByUsername(username);
-        System.out.println("Received MealDTO: " + workoutDTO);
-        Workout workout = workoutService.saveWorkout(workoutDTO, currentUser);
-        return "redirect:/workout-all/workouts";
+        Collections.reverse(workoutList);
+        Map<Workout, List<Exercise>> workoutExercisesMap = new LinkedHashMap<>();
+
+        for (Workout workout : workoutList) {
+            List<Exercise> exercisesForTheWorkout = exerciseService.findByWorkout(workout);
+            workoutExercisesMap.put(workout, exercisesForTheWorkout);
+        }
+
+        model.addAttribute("workoutExercisesMap", workoutExercisesMap);
+        return "/workout-all/workout-home";
     }
 
+//    @GetMapping("/workout-all/workout-home")
+//    public String viewHomeWorkout(Model model){
+//        if (!userSession.isLoggedIn()){
+//            return "redirect:/login";
+//        }
+//        User user = userService.findByUsername(userSession.getUsername());
+//        List<Workout> workoutList = workoutService.findByUser(user);
+//
+//        for (Workout workout : workoutList){
+//            model.addAttribute("singleWorkout", workout);
+//            List<Exercise> exercisesForTheWorkout = exerciseService.findByWorkout(workout);
+//            model.addAttribute("allExercisesForTheWorkout", exercisesForTheWorkout);
+//        }
+//
+////        model.addAttribute("workouts", workoutList);
+//        return "/workout-all/workout-home";
+//    }
 
-    @PostMapping("/workouts/delete/{id}")
-    public String deleteWorkout(@PathVariable Long id) {
-        workoutService.deleteWorkout(id);
-        return "redirect:/workout-all/workouts";
+    //ADD WORKOUT -----------------------------------------------------------
+    @GetMapping("/workout-all/workout-add")
+    public String viewAddWorkout(Model model, List<ExerciseDTO> exerciseDTOList){
+        if (!userSession.isLoggedIn()){
+            return "redirect:/login";
+        }
+        model.addAttribute("workoutDTO", new WorkoutDTO());
+        model.addAttribute("exerciseDTOList", exerciseDTOList);
+        return "/workout-all/workout-add";
     }
+
+    @PostMapping("/workout-all/workout-add")
+    public String saveWorkout(@Valid WorkoutDTO workoutDTO, BindingResult bindingResult,
+                                @SessionAttribute("exerciseDTOList") List<ExerciseDTO> exerciseDTOList){
+        if (bindingResult.hasErrors()){
+            System.out.println("Binding error");
+            return "/workout-all/workout-add";
+        }
+        User currentUser = userService.findByUsername(userSession.getUsername());
+        workoutDTO.setExercises(exerciseDTOList);
+        Workout currentWorkout = workoutService.saveWorkout(workoutDTO, currentUser);
+        exerciseService.saveExercise(currentWorkout, exerciseDTOList);
+        exerciseDTOList.clear();
+        return "redirect:/workout-all/workout-home";
+    }
+
+    //ADD EXERCISE ----------------------------------------------------------
+    @GetMapping("/workout-all/exercise-add")
+    private String viewAddExercise(Model model){
+        if (!userSession.isLoggedIn()){
+            return "redirect:/login";
+        }
+        model.addAttribute("exerciseDTO", new ExerciseDTO());
+        return "/workout-all/exercise-add";
+    }
+
+    @PostMapping("workout-all/exercise-add")
+    private String saveExercise(@Valid ExerciseDTO exerciseDTO, BindingResult bindingResult,
+                                    @SessionAttribute("exerciseDTOList") List<ExerciseDTO> exerciseDTOList){
+        if (bindingResult.hasErrors()){
+            System.out.println("Binding error");
+            return "/workout-all/exercise-add";
+        }
+
+         exerciseDTOList.add(exerciseDTO);
+
+        return "redirect:/workout-all/workout-add";
+    }
+
+    // DELETE EXERCISE --------------------------------------------------------
+
 }
 

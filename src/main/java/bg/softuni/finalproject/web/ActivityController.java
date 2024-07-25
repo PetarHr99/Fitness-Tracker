@@ -65,7 +65,6 @@ public class ActivityController {
         }
 
         User currentUser = userService.findByUsername(username);
-        System.out.println("Received ActivityDTO: " + activityDTO);
         Activity activity = activityService.saveActivity(activityDTO, currentUser);
         return "redirect:/activity-all/activity";
     }

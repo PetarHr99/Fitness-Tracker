@@ -1,34 +1,31 @@
 package bg.softuni.finalproject.web.dto;
 
-import bg.softuni.finalproject.Entity.Exercise;
+import bg.softuni.finalproject.exercises.ExerciseDTO;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class WorkoutDTO {
-    @NotEmpty(message = "Title is required")
+    @NotEmpty
+    @NotBlank
     private String title;
 
-    private List<Exercise> exercises;
-
-    public WorkoutDTO() {
-        this.exercises = new ArrayList<>();
-    }
-
+    private List<ExerciseDTO> exercises;
+    public WorkoutDTO() {}
     public String getTitle() {
         return title;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public List<Exercise> getExercises() {
+    public List<ExerciseDTO> getExercises() {
         return exercises;
     }
 
-    public void setExercises(List<Exercise> exercises) {
+    public void setExercises(List<ExerciseDTO> exercises) {
         this.exercises = exercises;
     }
 }

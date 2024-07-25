@@ -15,13 +15,34 @@
 
 <!-- Hero Section -->
 <section class="jumbotron text-center bg-primary text-white py-5">
-    <div class="container">
+    <div id="carousel" class="carousel slide" data-ride="carousel" data-interval="5000">
+
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img th:src="@{/img/carousel-1}" alt="" class="w-100">
+            </div>
+            <div class="carousel-item">
+                <img th:src="@{/img/carousel-2}" alt="" class="w-100">
+            </div>
+            <div class="carousel-item">
+                <img th:src="@{/img/carousel-3}" alt="" class="w-100">
+            </div>
+        </div>
+
+        <a href="#carousel" class="carousel-control-prev" role="button" data-slide="prev">
+            <span class="fas fa-chevron-left fa-2x"></span>
+        </a>
+        <a href="#carousel" class="carousel-control-next" role="button" data-slide="next">
+            <span class="fas fa-chevron-right fa-2x"></span>
+        </a>
+
         <h1 class="jumbotron-heading" th:text="#{hero.welcome}">Welcome to Fitness Tracker</h1>
         <p class="lead" th:text="#{hero.description}">Track your workouts, diet, and progress all in one place.</p>
         <p>
             <a th:href="@{/register}" class="btn btn-secondary my-2" th:text="#{hero.getStarted}">Get Started</a>
             <a th:href="@{/features}" class="btn btn-light my-2" th:text="#{hero.learnMore}">Learn More</a>
         </p>
+
     </div>
 </section>
 

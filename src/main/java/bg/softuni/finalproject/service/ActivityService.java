@@ -31,7 +31,6 @@ public class ActivityService {
     public void deleteActivity(Long id) {
         activityRepository.deleteById(id);
     }
-
     public Activity findLastActivityByUser(User user) {
         return activityRepository.findTopByAddedByUserOrderByDateOfActivityDesc(user);
     }

@@ -1,63 +1,63 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="#{title.navbar}">Navbar</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
 </head>
 <body>
 
 <!-- Navbar Fragment -->
 <div th:fragment="navbar">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="font-size: 1.15rem; font-weight: 600; letter-spacing: .1rem; z-index: 1;">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">
+                <img th:src="@{/img/logo.png}" alt="Logo" title="Logo" style="width: 50px; height: auto; background-color: brown;">
+            </a>
             <a class="navbar-brand" th:href="@{/}" th:text="#{navbar.brand}">Fitness Tracker</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item" th:unless="${@userSession.isLoggedIn()}">
-                        <a class="nav-link" th:href="@{/}" th:text="#{navbar.home}">Home</a>
+                    <li class="nav-item" th:unless="${@userSession.isLoggedIn()}" style="padding: .5rem;">
+                        <a class="nav-link" th:href="@{/}" th:text="#{navbar.home}" style="color: rgba(80, 80, 198, 0.73)!important;">Home</a>
                     </li>
-                    <li class="nav-item" th:unless="${@userSession.isLoggedIn()}">
-                        <a class="nav-link" th:href="@{/features}" th:text="#{navbar.features}">Features</a>
+                    <li class="nav-item" th:unless="${@userSession.isLoggedIn()}" style="padding: .5rem;">
+                        <a class="nav-link" th:href="@{/features}" th:text="#{navbar.features}" style="color: rgba(80, 80, 198, 0.73)!important;">Features</a>
                     </li>
-                    <li class="nav-item" th:unless="${@userSession.isLoggedIn()}">
-                        <a class="nav-link" th:href="@{/pricing}" th:text="#{navbar.pricing}">Pricing</a>
+                    <li class="nav-item" th:unless="${@userSession.isLoggedIn()}" style="padding: .5rem;">
+                        <a class="nav-link" th:href="@{/pricing}" th:text="#{navbar.pricing}" style="color: rgba(80, 80, 198, 0.73)!important;">Pricing</a>
                     </li>
-                    <li class="nav-item" th:unless="${@userSession.isLoggedIn()}">
-                        <a class="nav-link" th:href="@{/register}" th:text="#{navbar.register}">Register</a>
+                    <li class="nav-item" th:unless="${@userSession.isLoggedIn()}" style="padding: .5rem;">
+                        <a class="nav-link" th:href="@{/register}" th:text="#{navbar.register}" style="color: rgba(80, 80, 198, 0.73)!important;">Register</a>
                     </li>
-                    <li class="nav-item" th:unless="${@userSession.isLoggedIn()}">
-                        <a class="nav-link" th:href="@{/login}" th:text="#{navbar.login}">Login</a>
+                    <li class="nav-item" th:unless="${@userSession.isLoggedIn()}" style="padding: .5rem;">
+                        <a class="nav-link" th:href="@{/login}" th:text="#{navbar.login}" style="color: rgba(80, 80, 198, 0.73)!important;">Login</a>
                     </li>
-                    <li th:if="${@userSession.isLoggedIn()}" class="nav-item">
-                        <a class="nav-link" th:href="@{/home}" th:text="#{navbar.dashboard}">Dashboard</a>
+                    <li th:if="${@userSession.isLoggedIn()}" class="nav-item" style="padding: .5rem;">
+                        <a class="nav-link" th:href="@{/home}" th:text="#{navbar.dashboard}" style="color: rgba(80, 80, 198, 0.73)!important;">Dashboard</a>
                     </li>
-                    <li th:if="${@userSession.isLoggedIn()}" class="nav-item">
-                        <a class="nav-link" th:href="@{/workout-all/workouts}" th:text="#{navbar.workouts}">Workouts</a>
+                    <li th:if="${@userSession.isLoggedIn()}" class="nav-item" style="padding: .5rem;">
+                        <a class="nav-link" th:href="@{/workout-all/workout-home}" th:text="#{navbar.workouts}" style="color: rgba(80, 80, 198, 0.73)!important;">Workouts</a>
                     </li>
-                    <li th:if="${@userSession.isLoggedIn()}" class="nav-item">
-                        <a class="nav-link" th:href="@{/meals-all/meals}" th:text="#{navbar.foodTracking}">Food Tracking</a>
+                    <li th:if="${@userSession.isLoggedIn()}" class="nav-item" style="padding: .5rem;">
+                        <a class="nav-link" th:href="@{/meals-all/meals}" th:text="#{navbar.foodTracking}" style="color: rgba(80, 80, 198, 0.73)!important;">Food Tracking</a>
                     </li>
-                    <li th:if="${@userSession.isLoggedIn()}" class="nav-item">
-                        <a class="nav-link" th:href="@{/activity-all/activity}" th:text="#{navbar.activities}">Activities</a>
+                    <li th:if="${@userSession.isLoggedIn()}" class="nav-item" style="padding: .5rem;">
+                        <a class="nav-link" th:href="@{/activity-all/activity}" th:text="#{navbar.activities}" style="color: rgba(80, 80, 198, 0.73)!important;">Activities</a>
                     </li>
-                    <li th:if="${@userSession.isLoggedIn()}" class="nav-item">
-                        <a class="nav-link text-primary active h5 text-stroke" th:href="@{/logout}" th:text="#{navbar.logout}"> Logout </a>
+                    <li th:if="${@userSession.isLoggedIn()}" class="nav-item" style="padding: .5rem;">
+                        <a class="nav-link text-primary active h5 text-stroke" th:href="@{/logout}" th:text="#{navbar.logout}" style="color: rgba(80, 80, 198, 0.73)!important;">Logout</a>
                     </li>
-                    <li class="nav-item">
-                        <form th:method="get">
-                            <label class="text-white" for="lang" th:text="#{navbar.language}">Language</label>
-                            <select id="lang" name="lang" onchange="this.form.submit()">
+                    <li class="nav-item" style="padding: .5rem;">
+                        <form th:method="get" class="language-form" style="display: flex; align-items: center; padding: 0.15rem;">
+                            <label for="lang" th:text="#{navbar.language}" style="color: rgba(80, 80, 198, 0.73)!important; margin-right: 0.5rem;">Language</label>
+                            <select id="lang" name="lang" onchange="this.form.submit()" style="background-color: white; border: 1px solid rgba(80, 80, 198, 0.73); color: rgba(80, 80, 198, 0.73)!important; padding: 0.3rem; border-radius: 0.25rem;">
                                 <option value="en_US" th:selected="${#locale.toString()} == 'en_US'" th:text="#{navbar.language.english}">English</option>
                                 <option value="bg_BG" th:selected="${#locale.toString()} == 'bg_BG'" th:text="#{navbar.language.bulgarian}">Български</option>
-                                <option value="fr_FR" th:selected="${#locale.toString()} == 'fr_FR'" th:text="#{navbar.language.french}">Français</option>
                             </select>
                         </form>
                     </li>
@@ -68,6 +68,5 @@
 </div>
 <!-- Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>

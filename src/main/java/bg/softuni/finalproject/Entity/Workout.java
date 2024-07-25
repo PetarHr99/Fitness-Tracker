@@ -1,7 +1,7 @@
 package bg.softuni.finalproject.Entity;
 
+import bg.softuni.finalproject.exercises.Exercise;
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,17 +15,15 @@ public class Workout {
     @Column(nullable = false)
     private String title;
 
-    @OneToMany(mappedBy = "workout", cascade = CascadeType.ALL)
-    private List<Exercise> exercises;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User workoutAddedBy;
 
-    public Workout() {
-        this.exercises = new ArrayList<>();
-    }
+    @OneToMany(mappedBy = "workout", cascade = CascadeType.ALL)
+    private List<Exercise> exercises;
+    public Workout() {}
 
+    // Getters and setters
     public Long getId() {
         return id;
     }
@@ -42,19 +40,19 @@ public class Workout {
         this.title = title;
     }
 
-    public List<Exercise> getExercises() {
-        return exercises;
-    }
-
-    public void setExercises(List<Exercise> exercises) {
-        this.exercises = exercises;
-    }
-
     public User getWorkoutAddedBy() {
         return workoutAddedBy;
     }
 
     public void setWorkoutAddedBy(User workoutAddedBy) {
         this.workoutAddedBy = workoutAddedBy;
+    }
+
+    public List<Exercise> getExercises() {
+        return exercises;
+    }
+
+    public void setExercises(List<Exercise> exercises) {
+        this.exercises = exercises;
     }
 }

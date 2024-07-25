@@ -1,5 +1,6 @@
-package bg.softuni.finalproject.Entity;
+package bg.softuni.finalproject.exercises;
 
+import bg.softuni.finalproject.Entity.Workout;
 import jakarta.persistence.*;
 
 @Entity
@@ -9,16 +10,14 @@ public class Exercise {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "workout_id", nullable = false)
-    private Workout workout;
-
-    @Column(nullable = false)
     private String name;
-
     private int sets;
     private int reps;
     private double weight;
+
+    @ManyToOne
+    @JoinColumn(name = "workout_id")
+    private Workout workout;
 
     public Exercise() {
     }
@@ -31,13 +30,6 @@ public class Exercise {
         this.id = id;
     }
 
-    public Workout getWorkout() {
-        return workout;
-    }
-
-    public void setWorkout(Workout workout) {
-        this.workout = workout;
-    }
 
     public String getName() {
         return name;
@@ -69,5 +61,13 @@ public class Exercise {
 
     public void setWeight(double weight) {
         this.weight = weight;
+    }
+
+    public Workout getWorkout() {
+        return workout;
+    }
+
+    public void setWorkout(Workout workout) {
+        this.workout = workout;
     }
 }

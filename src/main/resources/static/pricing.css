@@ -1,8 +1,0 @@
-.col {
-    background-color: #f8f9fa; /* Light gray background */
-    transition: background-color 0.5s; /* Smooth transition for background color */
-}
-.col:hover {
-    background-color: #007bff; /* Blue background on hover */
-    color: white; /* Change text color to white on hover for better readability */
-}

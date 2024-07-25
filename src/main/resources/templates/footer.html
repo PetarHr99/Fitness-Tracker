@@ -8,15 +8,21 @@
 </head>
 <body>
 <!-- Footer -->
-<footer th:fragment="footer" class="text-muted py-4 bg-light">
-    <div class="footer-container">
-        <div class="footer-left">
-            <p class="mb-1" th:text="#{footer.copyright}">© 2024 Fitness Tracker</p>
-            <p class="mb-0" th:text="#{footer.newToFitnessTracker}">New to Fitness Tracker? <a th:href="@{/}">Visit the homepage.</a></p>
+<footer th:fragment="footer" class="text-muted py-4 bg-light" style="font-size: 1.15rem; font-weight: 600; letter-spacing: .1rem;">
+    <div class="container d-flex justify-content-between align-items-center">
+        <div class="footer-left d-flex flex-column">
+            <p class="mb-1" th:text="#{footer.copyright}" style="padding: .5rem; color: rgba(80, 80, 198, 0.73)!important;">© 2024 Fitness Tracker</p>
+            <p class="mb-0" th:text="#{footer.newToFitnessTracker}" style="padding: .5rem; color: rgba(80, 80, 198, 0.73)!important;">
+                New to Fitness Tracker? <a th:href="@{/}" style="color: rgba(80, 80, 198, 0.73)!important;">Visit the homepage.</a>
+            </p>
         </div>
-        <div class="footer-right">
-            <p class="float-end mb-1"><a href="#" th:text="#{footer.backToTop}">Back to top</a></p>
-            <p class="mb-1"><a th:href="@{/contact}" th:text="#{footer.contactUs}">Contact us</a></p>
+        <div class="footer-right d-flex flex-column align-items-end">
+            <p class="mb-1" style="padding: .5rem;">
+                <a href="#" th:text="#{footer.backToTop}" style="color: rgba(80, 80, 198, 0.73)!important;">Back to top</a>
+            </p>
+            <p class="mb-1" style="padding: .5rem;">
+                <a th:href="@{/contact}" th:text="#{footer.contactUs}" style="color: rgba(80, 80, 198, 0.73)!important;">Contact us</a>
+            </p>
         </div>
     </div>
 </footer>

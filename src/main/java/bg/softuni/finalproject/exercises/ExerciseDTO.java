@@ -1,9 +1,22 @@
-package bg.softuni.finalproject.web.dto;
+package bg.softuni.finalproject.exercises;
+
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class ExerciseDTO {
+    @NotBlank
+    @NotNull
     private String name;
+    @Min(0)
+    @Max(100)
     private int sets;
+    @Min(0)
+    @Max(100)
     private int reps;
+    @Min(0)
+    @Max(10000)
     private double weight;
 
     public ExerciseDTO() {
@@ -40,4 +53,6 @@ public class ExerciseDTO {
     public void setWeight(double weight) {
         this.weight = weight;
     }
+
+
 }
