@@ -1,4 +1,4 @@
-package bg.softuni.finalproject.exercises;
+package bg.softuni.finalproject.web.dto;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

@@ -1,6 +1,9 @@
-package bg.softuni.finalproject.exercises;
+package bg.softuni.finalproject.service;
 
+import bg.softuni.finalproject.Entity.Exercise;
 import bg.softuni.finalproject.Entity.Workout;
+import bg.softuni.finalproject.repo.ExerciseRepository;
+import bg.softuni.finalproject.web.dto.ExerciseDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

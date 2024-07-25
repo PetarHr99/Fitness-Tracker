@@ -1,8 +1,7 @@
 package bg.softuni.finalproject.Entity;
 
-import bg.softuni.finalproject.exercises.Exercise;
 import jakarta.persistence.*;
-import java.util.ArrayList;
+
 import java.util.List;
 
 @Entity

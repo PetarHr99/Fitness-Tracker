@@ -1,4 +1,4 @@
-package bg.softuni.finalproject.exercises;
+package bg.softuni.finalproject.Entity;
 
 import bg.softuni.finalproject.Entity.Workout;
 import jakarta.persistence.*;

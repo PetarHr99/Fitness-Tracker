@@ -18,11 +18,11 @@
 
 <!-- Login Form -->
 <div class="container my-5">
-    <h2 class="text-center" th:text="#{login.heading}">Login</h2>
+    <h2 class="text-center" th:text="#{login.heading}" style="color: #8B4513;">Login</h2>
 
     <form th:action="@{/login}" th:method="POST" th:object="${loginData}">
         <div class="mb-3">
-            <label for="username" class="form-label" th:text="#{login.username}">Username</label>
+            <label for="username" class="form-label" th:text="#{login.username}" style="color: #8B4513;">Username</label>
             <input name="username" type="text" class="form-control" id="username" th:field="*{username}" th:errorclass="is-invalid" required>
             <div th:if="${#fields.hasErrors('username')}" class="invalid-feedback">
                 <small th:errors="*{username}"></small>
@@ -30,7 +30,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="password" class="form-label" th:text="#{login.password}">Password</label>
+            <label for="password" class="form-label" th:text="#{login.password}" style="color: #8B4513;">Password</label>
             <input name="password" type="password" class="form-control" id="password" th:field="*{password}" th:errorclass="is-invalid" required>
             <div th:if="${#fields.hasErrors('password')}" class="invalid-feedback">
                 <small th:errors="*{password}"></small>
@@ -41,7 +41,7 @@
             <small th:text="${session.loginError}"></small>
         </div>
 
-        <button type="submit" class="btn btn-primary" th:text="#{login.submit}">Login</button>
+        <button type="submit" class="btn btn-primary" th:text="#{login.submit}" style="background-color: #8B4513; border-color: #8B4513;">Login</button>
     </form>
 </div>
 

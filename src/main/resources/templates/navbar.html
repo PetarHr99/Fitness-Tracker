@@ -11,7 +11,7 @@
 
 <!-- Navbar Fragment -->
 <div th:fragment="navbar">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="font-size: 1.15rem; font-weight: 600; letter-spacing: .1rem; z-index: 1;">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #FFF5E1; font-size: 1.15rem; font-weight: 600; letter-spacing: .1rem; z-index: 1;">
         <div class="container">
             <a class="navbar-brand" th:href="@{/}">
                 <img th:src="@{/img/logo.png}" alt="Logo" title="Logo" style="width: 50px; height: auto; background-color: brown;">
@@ -23,39 +23,39 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item" th:unless="${@userSession.isLoggedIn()}" style="padding: .5rem;">
-                        <a class="nav-link" th:href="@{/}" th:text="#{navbar.home}" style="color: rgba(80, 80, 198, 0.73)!important;">Home</a>
+                        <a class="nav-link" th:href="@{/}" th:text="#{navbar.home}" style="color: #8B4513 !important;">Home</a>
                     </li>
                     <li class="nav-item" th:unless="${@userSession.isLoggedIn()}" style="padding: .5rem;">
-                        <a class="nav-link" th:href="@{/features}" th:text="#{navbar.features}" style="color: rgba(80, 80, 198, 0.73)!important;">Features</a>
+                        <a class="nav-link" th:href="@{/features}" th:text="#{navbar.features}" style="color: #8B4513 !important;">Features</a>
                     </li>
                     <li class="nav-item" th:unless="${@userSession.isLoggedIn()}" style="padding: .5rem;">
-                        <a class="nav-link" th:href="@{/pricing}" th:text="#{navbar.pricing}" style="color: rgba(80, 80, 198, 0.73)!important;">Pricing</a>
+                        <a class="nav-link" th:href="@{/pricing}" th:text="#{navbar.pricing}" style="color: #8B4513 !important;">Pricing</a>
                     </li>
                     <li class="nav-item" th:unless="${@userSession.isLoggedIn()}" style="padding: .5rem;">
-                        <a class="nav-link" th:href="@{/register}" th:text="#{navbar.register}" style="color: rgba(80, 80, 198, 0.73)!important;">Register</a>
+                        <a class="nav-link" th:href="@{/register}" th:text="#{navbar.register}" style="color: #8B4513 !important;">Register</a>
                     </li>
                     <li class="nav-item" th:unless="${@userSession.isLoggedIn()}" style="padding: .5rem;">
-                        <a class="nav-link" th:href="@{/login}" th:text="#{navbar.login}" style="color: rgba(80, 80, 198, 0.73)!important;">Login</a>
+                        <a class="nav-link" th:href="@{/login}" th:text="#{navbar.login}" style="color: #8B4513 !important;">Login</a>
                     </li>
                     <li th:if="${@userSession.isLoggedIn()}" class="nav-item" style="padding: .5rem;">
-                        <a class="nav-link" th:href="@{/home}" th:text="#{navbar.dashboard}" style="color: rgba(80, 80, 198, 0.73)!important;">Dashboard</a>
+                        <a class="nav-link" th:href="@{/home}" th:text="#{navbar.dashboard}" style="color: #8B4513 !important;">Dashboard</a>
                     </li>
                     <li th:if="${@userSession.isLoggedIn()}" class="nav-item" style="padding: .5rem;">
-                        <a class="nav-link" th:href="@{/workout-all/workout-home}" th:text="#{navbar.workouts}" style="color: rgba(80, 80, 198, 0.73)!important;">Workouts</a>
+                        <a class="nav-link" th:href="@{/workout-all/workout-home}" th:text="#{navbar.workouts}" style="color: #8B4513 !important;">Workouts</a>
                     </li>
                     <li th:if="${@userSession.isLoggedIn()}" class="nav-item" style="padding: .5rem;">
-                        <a class="nav-link" th:href="@{/meals-all/meals}" th:text="#{navbar.foodTracking}" style="color: rgba(80, 80, 198, 0.73)!important;">Food Tracking</a>
+                        <a class="nav-link" th:href="@{/meals-all/meals}" th:text="#{navbar.foodTracking}" style="color: #8B4513 !important;">Food Tracking</a>
                     </li>
                     <li th:if="${@userSession.isLoggedIn()}" class="nav-item" style="padding: .5rem;">
-                        <a class="nav-link" th:href="@{/activity-all/activity}" th:text="#{navbar.activities}" style="color: rgba(80, 80, 198, 0.73)!important;">Activities</a>
+                        <a class="nav-link" th:href="@{/activity-all/activity}" th:text="#{navbar.activities}" style="color: #8B4513 !important;">Activities</a>
                     </li>
                     <li th:if="${@userSession.isLoggedIn()}" class="nav-item" style="padding: .5rem;">
-                        <a class="nav-link text-primary active h5 text-stroke" th:href="@{/logout}" th:text="#{navbar.logout}" style="color: rgba(80, 80, 198, 0.73)!important;">Logout</a>
+                        <a class="nav-link text-primary active h5 text-stroke" th:href="@{/logout}" th:text="#{navbar.logout}" style="color: #8B4513 !important;">Logout</a>
                     </li>
                     <li class="nav-item" style="padding: .5rem;">
                         <form th:method="get" class="language-form" style="display: flex; align-items: center; padding: 0.15rem;">
-                            <label for="lang" th:text="#{navbar.language}" style="color: rgba(80, 80, 198, 0.73)!important; margin-right: 0.5rem;">Language</label>
-                            <select id="lang" name="lang" onchange="this.form.submit()" style="background-color: white; border: 1px solid rgba(80, 80, 198, 0.73); color: rgba(80, 80, 198, 0.73)!important; padding: 0.3rem; border-radius: 0.25rem;">
+                            <label for="lang" th:text="#{navbar.language}" style="color: #8B4513 !important; margin-right: 0.5rem;">Language</label>
+                            <select id="lang" name="lang" onchange="this.form.submit()" style="background-color: #FFF5E1; border: 1px solid #8B4513; color: #8B4513 !important; padding: 0.3rem; border-radius: 0.25rem;">
                                 <option value="en_US" th:selected="${#locale.toString()} == 'en_US'" th:text="#{navbar.language.english}">English</option>
                                 <option value="bg_BG" th:selected="${#locale.toString()} == 'bg_BG'" th:text="#{navbar.language.bulgarian}">Български</option>
                             </select>
