@@ -23,6 +23,7 @@ public class Activity {
     private User addedByUser;
 
     public Activity() {
+
     }
 
     public long getId() {

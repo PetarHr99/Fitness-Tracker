@@ -9,6 +9,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String nonLoggedInIndex(){
+
         return "index";
     }
 

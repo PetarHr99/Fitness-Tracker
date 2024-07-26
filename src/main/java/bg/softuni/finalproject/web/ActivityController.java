@@ -35,12 +35,18 @@ public class ActivityController {
 
     @GetMapping("/activity-all/activity")
     public String viewActivitiesPage(Model model) {
+        if (!userSession.isLoggedIn()){
+            return "redirect:/login";
+        }
         model.addAttribute("activities", activityService.getAllActivities());
         return "/activity-all/activity";
     }
 
-    @GetMapping("/activity/add-activity")
+    @GetMapping("/activity-all/add-activity")
     public String showAddActivityForm(Model model) {
+        if (!userSession.isLoggedIn()){
+            return "redirect:/login";
+        }
         model.addAttribute("activity", new ActivityDTO());
         return "/activity-all/add-activity";
     }

@@ -101,14 +101,15 @@ public class UserController {
             return "redirect:/login";
         }
 
-        // Set user session or other login-related actions
-        // userSession.setUser(userService.findByUsername(loginDTO.getUsername()));
 
         return "redirect:/home";
     }
 
     @GetMapping("/home")
     public String showHomePage(Model model) {
+        if (!userSession.isLoggedIn()){
+            return "redirect:/login";
+        }
         model.addAttribute("username", userSession.getUsername());
         return "home";
     }

@@ -35,12 +35,15 @@ public class UserDashboardController {
         String username = userSession.getUsername();
         User user = userService.findByUsername(username);
 
+        String targetGoal = getString(user);
+        String getGender = getGender(user);
+
         UserDashboardDTO dashboardDTO = new UserDashboardDTO();
-        dashboardDTO.setTargetGoal(user.getTargetGoal().toString());
+        dashboardDTO.setTargetGoal(targetGoal);
         dashboardDTO.setAge(user.getAge());
         dashboardDTO.setWeight(user.getWeight());
         dashboardDTO.setHeight(user.getHeight());
-        dashboardDTO.setGender(user.getGender().toString());
+        dashboardDTO.setGender(getGender);
         dashboardDTO.setCurrentWeight(user.getCurrentWeight());
         dashboardDTO.setRecommendedCalories(user.getCurrentCalorieIntake());
 
@@ -67,6 +70,31 @@ public class UserDashboardController {
 
         return new ResponseEntity<>(dashboardDTO, HttpStatus.OK);
     }
+
+    private static String getGender(User user) {
+        String gender = "";
+        if (user.getGender().toString().equals("MALE")){
+            gender = "Male";
+        }else if (user.getGender().toString().equals("FEMALE")){
+            gender = "Female";
+        } else {
+            gender = "Other";
+        }
+        return gender;
+    }
+
+    private static String getString(User user) {
+        String targetGoal = "";
+        if (user.getTargetGoal().toString().equals("GAIN")){
+            targetGoal = "Gain muscle mass and strength";
+        }else if (user.getTargetGoal().toString().equals("LOSS")){
+            targetGoal = "Loss of weight";
+        } else {
+            targetGoal = "Maintain weight";
+        }
+        return targetGoal;
+    }
+
     @PostMapping("/current-data")
     public ResponseEntity<UserDashboardDTO> updateCurrentWeight(@RequestBody CurrentDataDTO currentDataDTO) {
         String username = userSession.getUsername();
@@ -90,6 +118,14 @@ public class UserDashboardController {
         dashboardDTO.setWeightDifference(weightDifference);
 
         // Calculate recommended calorie intake
+        double recommendedCalories = getRecommendedCalories(user, currentWeight);
+        userService.updateCurrentCalorieIntake(username, recommendedCalories);
+        dashboardDTO.setRecommendedCalories(recommendedCalories);
+
+        return new ResponseEntity<>(dashboardDTO, HttpStatus.OK);
+    }
+
+    private static double getRecommendedCalories(User user, double currentWeight) {
         int age = user.getAge();
         double recommendedCalories;
         if (user.getGender() == Gender.MALE) {
@@ -102,9 +138,6 @@ public class UserDashboardController {
         } else if (user.getTargetGoal() == TargetGoal.GAIN) {
             recommendedCalories = recommendedCalories + 300;
         }
-        userService.updateCurrentCalorieIntake(username, recommendedCalories);
-        dashboardDTO.setRecommendedCalories(recommendedCalories);
-
-        return new ResponseEntity<>(dashboardDTO, HttpStatus.OK);
+        return recommendedCalories;
     }
 }

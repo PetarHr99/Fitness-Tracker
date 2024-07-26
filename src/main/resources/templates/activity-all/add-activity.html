@@ -6,7 +6,7 @@
     <title th:text="#{title.addActivity}">Add Activity - Fitness Tracker</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body style="background-color: #FFF5E1; color: #8B4513;">
 
 <!-- Navbar -->
 <div th:replace="navbar :: navbar"></div>
@@ -17,24 +17,24 @@
     <form th:action="@{/activity-all/add-activity}" th:object="${activityDTO}" method="POST">
         <div class="mb-3">
             <label for="typeOfActivity" class="form-label" th:text="#{addActivity.typeOfActivity}">Type of Activity</label>
-            <input type="text" class="form-control" id="typeOfActivity" th:field="*{typeOfActivity}" required>
+            <input type="text" class="form-control" id="typeOfActivity" th:field="*{typeOfActivity}" required style="border-color: #8B4513;">
         </div>
         <div class="mb-3">
             <label for="dateOfActivity" class="form-label" th:text="#{addActivity.dateOfActivity}">Date of Activity</label>
-            <input type="date" class="form-control" id="dateOfActivity" th:field="*{dateOfActivity}" required>
+            <input type="date" class="form-control" id="dateOfActivity" th:field="*{dateOfActivity}" required style="border-color: #8B4513;">
         </div>
 
         <div class="mb-3">
             <label for="calories" class="form-label" th:text="#{addActivity.calories}">Calories</label>
-            <input type="number" class="form-control" id="calories" th:field="*{calories}" required>
+            <input type="number" class="form-control" id="calories" th:field="*{calories}" required style="border-color: #8B4513;">
         </div>
 
         <div class="mb-3">
             <label for="timeOfTraining" class="form-label" th:text="#{addActivity.timeOfTraining}">Time of Training</label>
-            <input type="time" class="form-control" id="timeOfTraining" th:field="*{timeOfTraining}" required>
+            <input type="time" class="form-control" id="timeOfTraining" th:field="*{timeOfTraining}" required style="border-color: #8B4513;">
         </div>
 
-        <button type="submit" class="btn btn-primary" th:text="#{addActivity.save}">Save Activity</button>
+        <button type="submit" class="btn btn-primary" th:text="#{addActivity.save}" style="background-color: #8B4513; border-color: #8B4513;">Save Activity</button>
     </form>
 </div>
 <!-- Footer -->

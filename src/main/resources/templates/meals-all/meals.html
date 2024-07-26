@@ -1,34 +1,34 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="#{title.meals}">Meals - Fitness Tracker</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body style=" color: #8B4513;">
 <!-- Navbar -->
 <div th:replace="navbar :: navbar"></div>
 
-<!-- Activities Page Content -->
+<!-- Meals Page Content -->
 <div class="container my-5">
     <h2 class="text-center" th:text="#{meals.heading}">Meals</h2>
-    <a href="/meals-all/add-meals" class="btn btn-primary mb-3" th:text="#{meals.addNew}">Add New Meal</a>
+    <a href="/meals-all/add-meals" class="btn btn-primary mb-3" th:text="#{meals.addNew}" style="background-color: #8B4513; border-color: #8B4513;">Add New Meal</a>
     <h2 class="text-center" th:text="#{meals.past}">Past Meals</h2>
     <div class="list-group">
-        <div th:each="meal : ${meals}" class="list-group-item">
-            <h5><strong th:text="#{meals.breakfast}">Breakfast: </strong><span th:text="${meal.breakfast}"></span></h5>
-            <h5><strong th:text="#{meals.lunch}">Lunch: </strong><span th:text="${meal.lunch}"></span></h5>
-            <h5><strong th:text="#{meals.dinner}">Dinner: </strong><span th:text="${meal.dinner}"></span></h5>
-            <h5><strong th:text="#{meals.snack}">Snack: </strong><span th:text="${meal.snack}"></span></h5>
-            <h5><strong th:text="#{meals.totalCalories}">Total Calories: </strong><span th:text="${meal.totalCalories}"></span></h5>
+        <div th:each="meal : ${meals}" class="list-group-item" style="border-color: #8B4513; background-color: #FFF5E1; color: #8B4513;">
+            <ul style="list-style-type: none;">
+            <li><strong th:text="#{meals.breakfast}">Breakfast: </strong> <span th:text="${meal.breakfast}"></span></li>
+            <li><strong th:text="#{meals.lunch}">Lunch: </strong> <span th:text="${meal.lunch}"></span></li>
+            <li><strong th:text="#{meals.dinner}">Dinner: </strong> <span th:text="${meal.dinner}"></span></li>
+            <li><strong th:text="#{meals.snack}">Snack: </strong> <span th:text="${meal.snack}"></span></li>
+            <li><strong th:text="#{meals.totalCalories}">Total Calories: </strong> <span th:text="${meal.totalCalories}"></span></li>
+            </ul>
             <form th:action="@{/meals/delete/{id}(id=${meal.id})}" method="post" class="d-inline">
-                <button type="submit" class="btn btn-danger" th:text="#{meals.delete}">Delete</button>
+                <button type="submit" class="btn btn-danger" th:text="#{meals.delete}" style="background-color: #D2B48C; border-color: #D2B48C; color: #8B4513;">Delete</button>
             </form>
         </div>
     </div>
-
 </div>
 <!-- Footer -->
 <div th:replace="footer :: footer"></div>

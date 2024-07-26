@@ -35,12 +35,18 @@ public class MealController {
 
     @GetMapping("/meals-all/meals")
     public String viewActivitiesPage(Model model) {
+        if (!userSession.isLoggedIn()){
+            return "redirect:/login";
+        }
         model.addAttribute("meals", mealService.getAllMeals());
         return "/meals-all/meals";
     }
 
     @GetMapping("/meals-all/add-meals")
     public String showAddActivityForm(Model model) {
+        if (!userSession.isLoggedIn()){
+            return "redirect:/login";
+        }
         model.addAttribute("meal", new MealDTO());
         return "/meals-all/add-meals";
     }

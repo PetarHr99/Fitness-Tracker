@@ -49,7 +49,7 @@
                     <li th:if="${@userSession.isLoggedIn()}" class="nav-item" style="padding: .5rem;">
                         <a class="nav-link" th:href="@{/activity-all/activity}" th:text="#{navbar.activities}" style="color: #8B4513 !important;">Activities</a>
                     </li>
-                    <li th:if="${@userSession.isLoggedIn()}" class="nav-item" style="padding: .5rem;">
+                    <li th:if="${@userSession.isLoggedIn()}" class="nav-item" style="padding: .6rem;">
                         <a class="nav-link text-primary active h5 text-stroke" th:href="@{/logout}" th:text="#{navbar.logout}" style="color: #8B4513 !important;">Logout</a>
                     </li>
                     <li class="nav-item" style="padding: .5rem;">
