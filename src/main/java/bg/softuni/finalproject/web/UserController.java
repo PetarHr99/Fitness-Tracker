@@ -1,6 +1,9 @@
 package bg.softuni.finalproject.web;
 
+import bg.softuni.finalproject.Entity.Quote;
+import bg.softuni.finalproject.Entity.User;
 import bg.softuni.finalproject.config.UserSession;
+import bg.softuni.finalproject.repo.UserRepository;
 import bg.softuni.finalproject.service.UserService;
 import bg.softuni.finalproject.web.dto.LoginDTO;
 import bg.softuni.finalproject.web.dto.UserRegisterDTO;
@@ -22,6 +25,7 @@ public class UserController {
     public UserController(UserService userService, UserSession userSession) {
         this.userService = userService;
         this.userSession = userSession;
+
     }
 
     @ModelAttribute("registerData")
@@ -108,7 +112,7 @@ public class UserController {
             RedirectAttributes redirectAttributes,
             HttpSession session
     ) {
-        if (!userService.validateUser(loginDTO)) {
+        if (!userService.validateUser(loginDTO, session)) {
             bindingResult.reject("loginError", "Invalid username or password");
             session.setAttribute("loginError", "Invalid username or password");
         }else {
@@ -131,8 +135,23 @@ public class UserController {
         if (!userSession.isLoggedIn()){
             return "redirect:/login";
         }
+
+        User user = userService.findByUsername(userSession.getUsername());
+
+        System.out.println(user.isDailyQuoteShown());
+
+        if (user.isDailyQuoteShown() == false){
+            Quote quote = userService.getRandomQuote();
+            model.addAttribute("showMessage", false);
+            model.addAttribute("dailyQuote", quote.getText());
+            user.setDailyQuoteShown(true);
+        } else {
+            model.addAttribute("showMessage", false);
+        }
+
         model.addAttribute("username", userSession.getUsername());
-        return "home";
+
+        return "/home";
     }
 
     @GetMapping("/logout")

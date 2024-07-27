@@ -1,17 +1,21 @@
 package bg.softuni.finalproject.service;
 
+import bg.softuni.finalproject.Entity.Quote;
 import bg.softuni.finalproject.Entity.enums.Gender;
 import bg.softuni.finalproject.Entity.enums.TargetGoal;
 import bg.softuni.finalproject.Entity.User;
 import bg.softuni.finalproject.config.UserSession;
+import bg.softuni.finalproject.repo.QuoteRepository;
 import bg.softuni.finalproject.repo.UserRepository;
 import bg.softuni.finalproject.web.dto.LoginDTO;
 import bg.softuni.finalproject.web.dto.UserRegisterDTO;
+import jakarta.servlet.http.HttpSession;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class UserService {
@@ -19,13 +23,14 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserSession userSession;
     private final ModelMapper modelMapper;
+    private final QuoteRepository quoteRepository;
 
-
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserSession userSession, ModelMapper modelMapper) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserSession userSession, ModelMapper modelMapper, QuoteRepository quoteRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userSession = userSession;
         this.modelMapper = modelMapper;
+        this.quoteRepository = quoteRepository;
     }
 
     public boolean register(UserRegisterDTO data) {
@@ -38,6 +43,7 @@ public class UserService {
 
         User user = modelMapper.map(data, User.class);
         user.setPassword(passwordEncoder.encode(data.getPassword()));
+        user.setDailyQuoteShown(false);
         this.userRepository.save(user);
 
         return true;
@@ -52,11 +58,12 @@ public class UserService {
         return userRepository.existsByEmail(email);
     }
 
-    public boolean validateUser(LoginDTO loginDTO) {
+    public boolean validateUser(LoginDTO loginDTO, HttpSession session) {
         User user = userRepository.findByUsername(loginDTO.getUsername());
 
         if (user != null && passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
             userSession.login(user.getId(), loginDTO.getUsername());
+
             return true;
         }
 
@@ -98,5 +105,18 @@ public class UserService {
         User user = findByUsername(username);
         user.setCurrentCalorieIntake(currentCalorieIntake);
         userRepository.save(user);
+    }
+
+    public void resetDailyLoginStatus() {
+        userRepository.findAll().forEach(user -> {
+            user.setDailyQuoteShown(false);
+            userRepository.save(user);
+        });
+    }
+
+    public Quote getRandomQuote() {
+        long count = quoteRepository.count();
+        int index = new Random().nextInt((int) count);
+        return quoteRepository.findAll().get(index);
     }
 }

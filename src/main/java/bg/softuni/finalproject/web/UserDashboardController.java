@@ -11,8 +11,10 @@ import bg.softuni.finalproject.web.dto.ActivityDTO;
 import bg.softuni.finalproject.web.dto.CurrentDataDTO;
 import bg.softuni.finalproject.web.dto.MealDTO;
 import bg.softuni.finalproject.web.dto.UserDashboardDTO;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,49 +24,37 @@ public class UserDashboardController {
     private final MealService mealService;
     private final ActivityService activityService;
     private final UserSession userSession;
-
-    public UserDashboardController(UserService userService, MealService mealService, ActivityService activityService, UserSession userSession) {
+    private final ModelMapper modelMapper;
+    public UserDashboardController(UserService userService, MealService mealService, ActivityService activityService, UserSession userSession, ModelMapper modelMapper) {
         this.userService = userService;
         this.mealService = mealService;
         this.activityService = activityService;
         this.userSession = userSession;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping
     public ResponseEntity<UserDashboardDTO> getUserDashboard() {
+
         String username = userSession.getUsername();
         User user = userService.findByUsername(username);
 
         String targetGoal = getString(user);
         String getGender = getGender(user);
 
-        UserDashboardDTO dashboardDTO = new UserDashboardDTO();
+        UserDashboardDTO dashboardDTO = modelMapper.map(user, UserDashboardDTO.class);
         dashboardDTO.setTargetGoal(targetGoal);
-        dashboardDTO.setAge(user.getAge());
-        dashboardDTO.setWeight(user.getWeight());
-        dashboardDTO.setHeight(user.getHeight());
         dashboardDTO.setGender(getGender);
-        dashboardDTO.setCurrentWeight(user.getCurrentWeight());
-        dashboardDTO.setRecommendedCalories(user.getCurrentCalorieIntake());
 
         Meal lastMeal = mealService.findLastMealByUser(user);
         if (lastMeal != null) {
-            MealDTO mealDTO = new MealDTO();
-            mealDTO.setBreakfast(lastMeal.getBreakfast());
-            mealDTO.setLunch(lastMeal.getLunch());
-            mealDTO.setDinner(lastMeal.getDinner());
-            mealDTO.setSnack(lastMeal.getSnack());
-            mealDTO.setTotalCalories(lastMeal.getTotalCalories());
+            MealDTO mealDTO = modelMapper.map(lastMeal, MealDTO.class);
             dashboardDTO.setLastMeal(mealDTO);
         }
 
         Activity lastActivity = activityService.findLastActivityByUser(user);
         if (lastActivity != null) {
-            ActivityDTO activityDTO = new ActivityDTO();
-            activityDTO.setTypeOfActivity(lastActivity.getTypeOfActivity());
-            activityDTO.setDateOfActivity(lastActivity.getDateOfActivity());
-            activityDTO.setCalories(lastActivity.getCalories());
-            activityDTO.setTimeOfTraining(lastActivity.getTimeOfTraining());
+            ActivityDTO activityDTO = modelMapper.map(lastActivity, ActivityDTO.class);
             dashboardDTO.setLastActivity(activityDTO);
         }
 
@@ -94,6 +84,7 @@ public class UserDashboardController {
         }
         return targetGoal;
     }
+
 
     @PostMapping("/current-data")
     public ResponseEntity<UserDashboardDTO> updateCurrentWeight(@RequestBody CurrentDataDTO currentDataDTO) {

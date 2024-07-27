@@ -7,7 +7,6 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -52,6 +51,8 @@ public class User {
     private Double currentWeight;
     private Double currentCalorieIntake;
 
+    @Column(nullable = false)
+    private boolean dailyQuoteShown;
 
     public Double getCurrentCalorieIntake() {
         return currentCalorieIntake;
@@ -66,6 +67,14 @@ public class User {
         this.addedActivities = new ArrayList<>();
         this.addedMeals = new ArrayList<>();
 
+    }
+
+    public boolean isDailyQuoteShown() {
+        return dailyQuoteShown;
+    }
+
+    public void setDailyQuoteShown(boolean dailyQuoteShown) {
+        this.dailyQuoteShown = dailyQuoteShown;
     }
 
     public Double getCurrentWeight() {

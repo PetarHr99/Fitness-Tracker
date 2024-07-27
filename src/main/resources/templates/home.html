@@ -11,6 +11,14 @@
 <!-- Navbar -->
 <div th:replace="navbar :: navbar"></div>
 
+<!-- Motivational Quote -->
+<div class="container my-3" th:if="${showMessage}">
+    <div class="alert alert-info alert-dismissible fade show" role="alert" style="background-color: #8B4513; color: #FFF5E1;">
+        <strong>Daily Motivation:</strong> <span th:text="${dailyQuote}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</div>
+
 <!-- Home Page Content -->
 <div class="container my-5">
     <h2 class="text-center" style=""><strong th:text="#{home.welcome}">Welcome, </strong> <span th:text="${username}"> User </span></h2>
