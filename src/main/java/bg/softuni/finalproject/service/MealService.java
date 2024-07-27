@@ -4,6 +4,8 @@ import bg.softuni.finalproject.Entity.Meal;
 import bg.softuni.finalproject.Entity.User;
 import bg.softuni.finalproject.repo.MealRepository;
 import bg.softuni.finalproject.web.dto.MealDTO;
+import org.modelmapper.ModelMapper;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,20 +13,16 @@ import java.util.List;
 @Service
 public class MealService {
     private final MealRepository mealRepository;
+    private final ModelMapper modelMapperl;
 
-    public MealService(MealRepository mealRepository) {
+    public MealService(MealRepository mealRepository, ModelMapper modelMapperl) {
         this.mealRepository = mealRepository;
+        this.modelMapperl = modelMapperl;
     }
 
     public Meal saveMeal(MealDTO mealDTO, User currentUser){
-        Meal meal = new Meal();
-        meal.setBreakfast(mealDTO.getBreakfast());
-        meal.setLunch(mealDTO.getLunch());
-        meal.setDinner(mealDTO.getDinner());
-        meal.setSnack(mealDTO.getSnack());
-        meal.setTotalCalories(mealDTO.getTotalCalories());
+        Meal meal = modelMapperl.map(mealDTO, Meal.class);
         meal.setMealsAddedBy(currentUser);
-
        return mealRepository.save(meal);
     }
     public List<Meal> getAllMeals(){

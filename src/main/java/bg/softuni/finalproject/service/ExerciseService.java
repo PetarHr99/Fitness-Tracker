@@ -4,6 +4,7 @@ import bg.softuni.finalproject.Entity.Exercise;
 import bg.softuni.finalproject.Entity.Workout;
 import bg.softuni.finalproject.repo.ExerciseRepository;
 import bg.softuni.finalproject.web.dto.ExerciseDTO;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,19 +12,16 @@ import java.util.List;
 @Service
 public class ExerciseService {
     private final ExerciseRepository exerciseRepository;
+    private final ModelMapper modelMapper;
 
-    public ExerciseService(ExerciseRepository exerciseRepository) {
+    public ExerciseService(ExerciseRepository exerciseRepository, ModelMapper modelMapper) {
         this.exerciseRepository = exerciseRepository;
-
+        this.modelMapper = modelMapper;
     }
 
     public void saveExercise(Workout currentWorkout, List<ExerciseDTO> exerciseDTOList) {
         for (ExerciseDTO exerciseDTO : exerciseDTOList){
-            Exercise exercise = new Exercise();
-            exercise.setName(exerciseDTO.getName());
-            exercise.setSets(exerciseDTO.getSets());
-            exercise.setReps(exerciseDTO.getReps());
-            exercise.setWeight(exerciseDTO.getWeight());
+            Exercise exercise = modelMapper.map(exerciseDTO, Exercise.class);
             exercise.setWorkout(currentWorkout);
 
             exerciseRepository.save(exercise);

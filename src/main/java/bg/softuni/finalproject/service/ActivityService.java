@@ -5,6 +5,7 @@ import bg.softuni.finalproject.Entity.User;
 import bg.softuni.finalproject.repo.ActivityRepository;
 import bg.softuni.finalproject.repo.UserRepository;
 import bg.softuni.finalproject.web.dto.ActivityDTO;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,16 +13,14 @@ import java.util.List;
 @Service
 public class ActivityService {
     private final ActivityRepository activityRepository;
+    private final ModelMapper modelMapper;
 
-    public ActivityService(ActivityRepository activityRepository, UserRepository userRepository) {
+    public ActivityService(ActivityRepository activityRepository, UserRepository userRepository, ModelMapper modelMapper) {
         this.activityRepository = activityRepository;
+        this.modelMapper = modelMapper;
     }
     public Activity saveActivity(ActivityDTO activityDTO, User currentUser) {
-        Activity activity = new Activity();
-        activity.setTypeOfActivity(activityDTO.getTypeOfActivity());
-        activity.setDateOfActivity(activityDTO.getDateOfActivity());
-        activity.setCalories(activityDTO.getCalories());
-        activity.setTimeOfTraining(activityDTO.getTimeOfTraining());
+        Activity activity = modelMapper.map(activityDTO, Activity.class);
         activity.setAddedByUser(currentUser);
         return activityRepository.save(activity);
     }
