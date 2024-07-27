@@ -1,19 +1,21 @@
 package bg.softuni.finalproject.web.dto;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
-import java.sql.Time;
 import java.time.LocalDate;
 
 public class ActivityDTO {
-    @NotBlank
-    @Size(min = 2, max = 50)
+    @NotBlank(message = "The field must not be empty")
+    @Size(min = 2, max = 50, message = "Must be between 2 and 50 letters")
     private String typeOfActivity;
+
+    @NotNull(message = "The date of activity must not be null")
     private LocalDate dateOfActivity;
+
+    @Min(value = 0, message = "Enter a number between 0 and 10000")
+    @Max(value = 10000, message = "Enter a number between 0 and 10000")
     private int calories;
+
     private String timeOfTraining;
 
     public ActivityDTO() {

@@ -37,4 +37,7 @@ public class MealService {
     public Meal findLastMealByUser(User user) {
         return mealRepository.findTopByMealsAddedByOrderByIdDesc(user);
     }
+    public List<Meal> getMealsByUser(User user) {
+        return mealRepository.findByMealsAddedBy(user);
+    }
 }

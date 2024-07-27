@@ -16,7 +16,10 @@
 
         <div class="mb-3">
             <label for="title" class="form-label" style="color: #8B4513;">Title</label>
-            <input type="text" class="form-control" id="title" th:field="*{title}" required style="border-color: #8B4513;">
+            <input type="text" class="form-control" id="title" th:field="*{title}" th:errorclass="is-invalid" required style="border-color: #8B4513;">
+            <div th:if="${#fields.hasErrors('title')}" class="invalid-feedback">
+                <small th:errors="*{title}"></small>
+            </div>
         </div>
 
         <div class="mb-3">

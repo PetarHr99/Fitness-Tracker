@@ -28,6 +28,11 @@ public class ActivityService {
     public List<Activity> getAllActivities() {
         return activityRepository.findAll();
     }
+
+    public List<Activity> getActivitiesByUser(User user) {
+        return activityRepository.findByAddedByUser(user);
+    }
+
     public void deleteActivity(Long id) {
         activityRepository.deleteById(id);
     }

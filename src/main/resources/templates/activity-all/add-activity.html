@@ -16,24 +16,33 @@
     <h2 class="text-center" th:text="#{addActivity.heading}">Add Activity</h2>
     <form th:action="@{/activity-all/add-activity}" th:object="${activityDTO}" method="POST">
         <div class="mb-3">
-            <label for="typeOfActivity" class="form-label" th:text="#{addActivity.typeOfActivity}">Type of Activity</label>
-            <input type="text" class="form-control" id="typeOfActivity" th:field="*{typeOfActivity}" required style="border-color: #8B4513;">
+            <label for="typeOfActivity" class="form-label" th:text="#{addActivity.typeOfActivity}" style="color: #8B4513;">Type of Activity</label>
+            <input type="text" class="form-control" id="typeOfActivity" th:field="*{typeOfActivity}" th:errorclass="is-invalid" style="border-color: #8B4513;">
+            <div th:if="${#fields.hasErrors('typeOfActivity')}" class="invalid-feedback">
+                <small th:errors="*{typeOfActivity}"></small>
+            </div>
         </div>
         <div class="mb-3">
-            <label for="dateOfActivity" class="form-label" th:text="#{addActivity.dateOfActivity}">Date of Activity</label>
-            <input type="date" class="form-control" id="dateOfActivity" th:field="*{dateOfActivity}" required style="border-color: #8B4513;">
+            <label for="dateOfActivity" class="form-label" th:text="#{addActivity.dateOfActivity}" style="color: #8B4513;">Date of Activity</label>
+            <input type="date" class="form-control" id="dateOfActivity" th:field="*{dateOfActivity}" th:errorclass="is-invalid" required style="border-color: #8B4513;">
+            <div th:if="${#fields.hasErrors('dateOfActivity')}" class="invalid-feedback">
+                <small th:errors="*{dateOfActivity}"></small>
+            </div>
         </div>
-
         <div class="mb-3">
-            <label for="calories" class="form-label" th:text="#{addActivity.calories}">Calories</label>
-            <input type="number" class="form-control" id="calories" th:field="*{calories}" required style="border-color: #8B4513;">
+            <label for="calories" class="form-label" th:text="#{addActivity.calories}" style="color: #8B4513;">Calories</label>
+            <input type="number" class="form-control" id="calories" th:field="*{calories}" th:errorclass="is-invalid"  style="border-color: #8B4513;">
+            <div th:if="${#fields.hasErrors('calories')}" class="invalid-feedback">
+                <small th:errors="*{calories}"></small>
+            </div>
         </div>
-
         <div class="mb-3">
-            <label for="timeOfTraining" class="form-label" th:text="#{addActivity.timeOfTraining}">Time of Training</label>
-            <input type="time" class="form-control" id="timeOfTraining" th:field="*{timeOfTraining}" required style="border-color: #8B4513;">
+            <label for="timeOfTraining" class="form-label" th:text="#{addActivity.timeOfTraining}" style="color: #8B4513;">Time of Training</label>
+            <input type="time" class="form-control" id="timeOfTraining" th:field="*{timeOfTraining}" th:errorclass="is-invalid" required style="border-color: #8B4513;">
+            <div th:if="${#fields.hasErrors('timeOfTraining')}" class="invalid-feedback">
+                <small th:errors="*{timeOfTraining}"></small>
+            </div>
         </div>
-
         <button type="submit" class="btn btn-primary" th:text="#{addActivity.save}" style="background-color: #8B4513; border-color: #8B4513;">Save Activity</button>
     </form>
 </div>

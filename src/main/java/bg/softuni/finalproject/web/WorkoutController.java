@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
 
@@ -90,18 +91,25 @@ public class WorkoutController {
         if (!userSession.isLoggedIn()){
             return "redirect:/login";
         }
-        model.addAttribute("workoutDTO", new WorkoutDTO());
+        if (!model.containsAttribute("workoutDTO")) {
+            model.addAttribute("workoutDTO", new WorkoutDTO());
+        }
+//        model.addAttribute("workoutDTO", new WorkoutDTO());
         model.addAttribute("exerciseDTOList", exerciseDTOList);
         return "/workout-all/workout-add";
     }
 
     @PostMapping("/workout-all/workout-add")
     public String saveWorkout(@Valid WorkoutDTO workoutDTO, BindingResult bindingResult,
+                                RedirectAttributes redirectAttributes,
                                 @SessionAttribute("exerciseDTOList") List<ExerciseDTO> exerciseDTOList){
-        if (bindingResult.hasErrors()){
-            System.out.println("Binding error");
-            return "/workout-all/workout-add";
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("workoutDTO", workoutDTO);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.workoutDTO", bindingResult);
+            return "redirect:/workout-all/workout-add";
         }
+
         User currentUser = userService.findByUsername(userSession.getUsername());
         workoutDTO.setExercises(exerciseDTOList);
         Workout currentWorkout = workoutService.saveWorkout(workoutDTO, currentUser);
@@ -116,16 +124,20 @@ public class WorkoutController {
         if (!userSession.isLoggedIn()){
             return "redirect:/login";
         }
-        model.addAttribute("exerciseDTO", new ExerciseDTO());
+        if (!model.containsAttribute("exerciseDTO")) {
+            model.addAttribute("exerciseDTO", new ExerciseDTO());
+        }
         return "/workout-all/exercise-add";
     }
 
     @PostMapping("workout-all/exercise-add")
     private String saveExercise(@Valid ExerciseDTO exerciseDTO, BindingResult bindingResult,
+                                    RedirectAttributes redirectAttributes,
                                     @SessionAttribute("exerciseDTOList") List<ExerciseDTO> exerciseDTOList){
-        if (bindingResult.hasErrors()){
-            System.out.println("Binding error");
-            return "/workout-all/exercise-add";
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("exerciseDTO", exerciseDTO);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.exerciseDTO", bindingResult);
+            return "redirect:/workout-all/exercise-add";
         }
 
          exerciseDTOList.add(exerciseDTO);

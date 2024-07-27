@@ -2,12 +2,14 @@ package bg.softuni.finalproject.web.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
 public class WorkoutDTO {
-    @NotEmpty
-    @NotBlank
+    @NotEmpty(message = "Title must not be empty")
+    @NotBlank(message = "Title must not be blank")
+    @Size(min = 2, max = 50, message = "Must be between 2 and 50 letters")
     private String title;
 
     private List<ExerciseDTO> exercises;

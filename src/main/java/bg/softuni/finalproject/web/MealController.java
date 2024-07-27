@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class MealController {
@@ -38,7 +39,11 @@ public class MealController {
         if (!userSession.isLoggedIn()){
             return "redirect:/login";
         }
-        model.addAttribute("meals", mealService.getAllMeals());
+
+        String username = userSession.getUsername();
+        User currentUser = userService.findByUsername(username);
+
+        model.addAttribute("meals", mealService.getMealsByUser(currentUser));
         return "/meals-all/meals";
     }
 
@@ -53,11 +58,13 @@ public class MealController {
 
     @PostMapping("/meals-all/add-meals")
     public String saveMeal(@Valid MealDTO mealDTO,
-                               BindingResult bindingResult) {
+                           BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()){
-            System.out.println("Binding error");
-            return "/meals-all/add-meals";
+            redirectAttributes.addFlashAttribute("mealDTO", mealDTO);
+            redirectAttributes.addFlashAttribute(
+                    "org.springframework.validation.BindingResult.mealDTO", bindingResult);
+            return "redirect:/meals-all/add-meals";
         }
 
         String username = userSession.getUsername();
@@ -66,7 +73,6 @@ public class MealController {
         }
 
         User currentUser = userService.findByUsername(username);
-        System.out.println("Received MealDTO: " + mealDTO);
         Meal meal = mealService.saveMeal(mealDTO, currentUser);
         return "redirect:/meals-all/meals";
     }

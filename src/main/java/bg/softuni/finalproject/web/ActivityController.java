@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class ActivityController {
@@ -38,7 +39,10 @@ public class ActivityController {
         if (!userSession.isLoggedIn()){
             return "redirect:/login";
         }
-        model.addAttribute("activities", activityService.getAllActivities());
+        String username = userSession.getUsername();
+        User currentUser = userService.findByUsername(username);
+
+        model.addAttribute("activities", activityService.getActivitiesByUser(currentUser));
         return "/activity-all/activity";
     }
 
@@ -53,16 +57,14 @@ public class ActivityController {
 
     @PostMapping("/activity-all/add-activity")
     public String saveActivity(@Valid ActivityDTO activityDTO,
-                               BindingResult bindingResult) {
+                               BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("activityDTO", activityDTO);
+            redirectAttributes.addFlashAttribute(
+                    "org.springframework.validation.BindingResult.activityDTO", bindingResult);
 
-            System.out.println("Binding error");
-            System.out.println(bindingResult.getFieldErrorCount());
-            System.out.println(bindingResult.getFieldErrors());
-            bindingResult.getFieldErrors().forEach(err -> System.out.println(err.getField()));
-
-            return "/activity-all/add-activity";
+            return "redirect:/activity-all/add-activity";
         }
 
         String username = userSession.getUsername();

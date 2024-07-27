@@ -1,22 +1,22 @@
 package bg.softuni.finalproject.web.dto;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 
 public class ExerciseDTO {
-    @NotBlank
-    @NotNull
+    @NotBlank(message = "Exercise name must not be empty")
+    @Size(min = 2, max = 50, message = "Must be between 2 and 50 letters")
     private String name;
-    @Min(0)
-    @Max(100)
+
+    @Min(value = 0, message = "Sets must be at least 0")
+    @Max(value = 100, message = "Sets must be less than or equal to 100")
     private int sets;
-    @Min(0)
-    @Max(100)
+
+    @Min(value = 0, message = "Reps must be at least 0")
+    @Max(value = 100, message = "Reps must be less than or equal to 100")
     private int reps;
-    @Min(0)
-    @Max(10000)
+
+    @Min(value = 0, message = "Weight must be at least 0")
+    @Max(value = 10000, message = "Weight must be less than or equal to 10000")
     private double weight;
 
     public ExerciseDTO() {

@@ -16,25 +16,40 @@
     <h2 class="text-center" th:text="#{addMeal.heading}">Add Meal</h2>
     <form th:action="@{/meals-all/add-meals}" th:object="${mealDTO}" method="POST">
         <div class="mb-3">
-            <label for="breakfast" class="form-label" th:text="#{addMeal.breakfast}">Breakfast</label>
-            <input type="text" class="form-control" id="breakfast" th:field="*{breakfast}" style="border-color: #8B4513;">
+            <label for="breakfast" class="form-label" th:text="#{addMeal.breakfast}" style="color: #8B4513;">Breakfast</label>
+            <input type="text" class="form-control" id="breakfast" th:field="*{breakfast}" th:errorclass="is-invalid" style="border-color: #8B4513;">
+            <div th:if="${#fields.hasErrors('breakfast')}" class="invalid-feedback">
+                <small th:errors="*{breakfast}"></small>
+            </div>
         </div>
         <div class="mb-3">
-            <label for="lunch" class="form-label" th:text="#{addMeal.lunch}">Lunch</label>
-            <input type="text" class="form-control" id="lunch" th:field="*{lunch}" style="border-color: #8B4513;">
+            <label for="lunch" class="form-label" th:text="#{addMeal.lunch}" style="color: #8B4513;">Lunch</label>
+            <input type="text" class="form-control" id="lunch" th:field="*{lunch}" th:errorclass="is-invalid" style="border-color: #8B4513;">
+            <div th:if="${#fields.hasErrors('lunch')}" class="invalid-feedback">
+                <small th:errors="*{lunch}"></small>
+            </div>
         </div>
         <div class="mb-3">
-            <label for="dinner" class="form-label" th:text="#{addMeal.dinner}">Dinner</label>
-            <input type="text" class="form-control" id="dinner" th:field="*{dinner}" style="border-color: #8B4513;">
+            <label for="dinner" class="form-label" th:text="#{addMeal.dinner}" style="color: #8B4513;">Dinner</label>
+            <input type="text" class="form-control" id="dinner" th:field="*{dinner}" th:errorclass="is-invalid" style="border-color: #8B4513;">
+            <div th:if="${#fields.hasErrors('dinner')}" class="invalid-feedback">
+                <small th:errors="*{dinner}"></small>
+            </div>
         </div>
         <div class="mb-3">
-            <label for="snack" class="form-label" th:text="#{addMeal.snack}">Snack</label>
-            <input type="text" class="form-control" id="snack" th:field="*{snack}" style="border-color: #8B4513;">
+            <label for="snack" class="form-label" th:text="#{addMeal.snack}" style="color: #8B4513;">Snack</label>
+            <input type="text" class="form-control" id="snack" th:field="*{snack}" th:errorclass="is-invalid" style="border-color: #8B4513;">
+            <div th:if="${#fields.hasErrors('snack')}" class="invalid-feedback">
+                <small th:errors="*{snack}"></small>
+            </div>
         </div>
 
         <div class="mb-3">
-            <label for="total-calories" class="form-label" th:text="#{addMeal.totalCalories}">Total Calories</label>
-            <input type="number" class="form-control" id="total-calories" th:field="*{totalCalories}" required style="border-color: #8B4513;">
+            <label for="total-calories" class="form-label" th:text="#{addMeal.totalCalories}" style="color: #8B4513;">Total Calories</label>
+            <input type="number" class="form-control" id="total-calories" th:field="*{totalCalories}" th:errorclass="is-invalid" required style="border-color: #8B4513;">
+            <div th:if="${#fields.hasErrors('totalCalories')}" class="invalid-feedback">
+                <small th:errors="*{totalCalories}"></small>
+            </div>
         </div>
 
         <button type="submit" class="btn btn-primary" th:text="#{addMeal.save}" style="background-color: #8B4513; border-color: #8B4513;">Save Meal</button>

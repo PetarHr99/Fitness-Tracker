@@ -1,15 +1,22 @@
 package bg.softuni.finalproject.web.dto;
 
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public class MealDTO {
+    @Size(min = 1, max = 50, message = "Must be between 1 and 50 letters")
     private String breakfast;
+    @Size(min = 1, max = 50, message = "Must be between 1 and 50 letters")
     private String lunch;
+    @Size(min = 1, max = 50, message = "Must be between 1 and 50 letters")
     private String dinner;
+    @Size(min = 1, max = 50, message = "Must be between 1 and 50 letters")
     private String snack;
-    @NotNull
-    @Min(0)
+    @NotNull(message = "The field must not be empty")
+    @Min(value = 0, message = "Enter a number between 0 and 10000")
+    @Max(value = 10000, message = "Enter a number between 0 and 10000")
     private int totalCalories;
 
     public MealDTO() {}
