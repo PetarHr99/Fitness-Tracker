@@ -27,17 +27,17 @@ public class User {
 
     @Column(nullable = false)
     private String password;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private SubscriptionPlan subscriptionPlan;
     @Column(nullable = false)
     private Integer height;
     @Column(nullable = false)
     private Double weight;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Gender gender;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TargetGoal targetGoal;
     @OneToMany(mappedBy = "workoutAddedBy", cascade = CascadeType.ALL)

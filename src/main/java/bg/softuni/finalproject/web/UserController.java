@@ -6,7 +6,6 @@ import bg.softuni.finalproject.web.dto.LoginDTO;
 import bg.softuni.finalproject.web.dto.UserRegisterDTO;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -45,33 +44,55 @@ public class UserController {
             @Valid UserRegisterDTO data,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes
-    ){
+    ) {
+
+
+        if (data == null || bindingResult == null || redirectAttributes == null) {
+            throw new IllegalArgumentException("Arguments cannot be null");
+        }
+
+        // Validate passwords match
         if (!data.getPassword().equals(data.getConfirmPassword())) {
             bindingResult.rejectValue("confirmPassword", "error.registerData", "Passwords do not match");
+
         }
 
+        // Check if username exists
         if (userService.existsByUsername(data.getUsername())) {
             bindingResult.rejectValue("username", "error.registerData", "Username is already occupied");
+
         }
 
+        // Check if email exists
         if (userService.existsByEmail(data.getEmail())) {
             bindingResult.rejectValue("email", "error.registerData", "Email is already registered");
+
         }
 
+        // Handle validation errors
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("registerData", data);
             redirectAttributes.addFlashAttribute(
                     "org.springframework.validation.BindingResult.registerData", bindingResult);
-
             return "redirect:/register";
         }
-        boolean success = userService.register(data);
 
+        // Attempt to register the user
+        boolean success;
+        try {
+            success = userService.register(data);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("registrationError", "Registration failed due to an unexpected error. Please try again.");
+            return "redirect:/register";
+        }
+
+        // Handle registration failure
         if (!success) {
             redirectAttributes.addFlashAttribute("registrationError", "Registration failed. Please try again.");
             return "redirect:/register";
         }
 
+        // Redirect to login on successful registration
         return "redirect:/login";
     }
 

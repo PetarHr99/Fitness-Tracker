@@ -20,18 +20,12 @@ spring:
     basename: messages/messages
     encoding: UTF-8
 
-# Казваме на Spring да провери дали има dataSQL file и ако има го изпълни спрямо базата. Инициализиран веднъж
-# и insert-нати данните от dataSQL file трябва да променим на never или да закоментираме.
   sql:
     init:
       mode: never
 
   jpa:
-    # Choose either MySQL 8 or MySQL 5 below
-    # For MySQL 8
     database-platform: org.hibernate.dialect.MySQL8Dialect
-    #For MySQL 5
-    #database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
       ddl-auto: update
     open-in-view: false
@@ -40,8 +34,8 @@ spring:
         format_sql: true
         show_sql: true
     defer-datasource-initialization: true
-#Cloudinary Properties
-#cloudinary:
-  #api-key: 
-  #api-secret: 
-  #cloud-name: 
+  #Cloudinary Properties
+  #cloudinary:
+  #api-key:
+  #api-secret:
+  #cloud-name:
