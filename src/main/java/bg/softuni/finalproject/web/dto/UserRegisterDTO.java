@@ -6,31 +6,35 @@ import bg.softuni.finalproject.Entity.enums.TargetGoal;
 import jakarta.validation.constraints.*;
 
 public class UserRegisterDTO {
-    @NotBlank
-    @Size(min = 5, max = 20)
+    @NotBlank(message = "Username must not be blank")
+    @Size(min = 5, max = 20, message = "Username must be between 5 and 20 characters")
     private String username;
 
-    @NotBlank
-    @Email
+    @NotBlank(message = "Email must not be blank")
+    @Email(message = "Email should be valid")
     private String email;
 
-    @Min(0)
-    @Max(100)
+    @NotNull(message = "Age must not be null")
+    @Min(value = 0, message = "Age must be at least 0")
+    @Max(value = 100, message = "Age must be less than or equal to 100")
     private Integer age;
 
-    @NotBlank
-    @Size(min = 5, max = 20)
+    @NotBlank(message = "Password must not be blank")
+    @Size(min = 5, max = 20, message = "Password must be between 5 and 20 characters")
     private String password;
 
     private String confirmPassword;
 
     private SubscriptionPlan subscriptionPlan;
 
-    @Min(0)
-    @Max(300)
+    @NotNull(message = "Height must not be null")
+    @Min(value = 0, message = "Height must be at least 0 cm")
+    @Max(value = 300, message = "Height must be less than or equal to 300 cm")
     private Integer height;
-    @Min(0)
-    @Max(1000)
+
+    @NotNull(message = "Weight must not be null")
+    @Min(value = 0, message = "Weight must be at least 0 kg")
+    @Max(value = 1000, message = "Weight must be less than or equal to 1000 kg")
     private Double weight;
 
     private Gender gender;
