@@ -119,4 +119,10 @@ public class UserService {
         int index = new Random().nextInt((int) count);
         return quoteRepository.findAll().get(index);
     }
+
+    public void updateUserDailyQuoteStatus(User user){
+       userRepository.findByUsername(user.getUsername());
+       user.setDailyQuoteShown(true);
+       userRepository.save(user);
+    }
 }

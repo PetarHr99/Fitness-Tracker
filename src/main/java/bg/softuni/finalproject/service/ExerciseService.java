@@ -4,6 +4,7 @@ import bg.softuni.finalproject.Entity.Exercise;
 import bg.softuni.finalproject.Entity.Workout;
 import bg.softuni.finalproject.repo.ExerciseRepository;
 import bg.softuni.finalproject.web.dto.ExerciseDTO;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -31,4 +32,10 @@ public class ExerciseService {
     public List<Exercise> findByWorkout(Workout workout) {
         return exerciseRepository.findByWorkout(workout);
     }
+
+    @Transactional
+    public void deleteByWorkout(Workout workout) {
+        exerciseRepository.deleteByWorkout(workout);
+    }
+
 }

@@ -70,7 +70,6 @@ public class UserController {
         // Check if email exists
         if (userService.existsByEmail(data.getEmail())) {
             bindingResult.rejectValue("email", "error.registerData", "Email is already registered");
-
         }
 
         // Handle validation errors
@@ -142,9 +141,10 @@ public class UserController {
 
         if (user.isDailyQuoteShown() == false){
             Quote quote = userService.getRandomQuote();
-            model.addAttribute("showMessage", false);
+            model.addAttribute("showMessage", true);
             model.addAttribute("dailyQuote", quote.getText());
-            user.setDailyQuoteShown(true);
+            userService.updateUserDailyQuoteStatus(user);
+
         } else {
             model.addAttribute("showMessage", false);
         }

@@ -145,7 +145,15 @@ public class WorkoutController {
         return "redirect:/workout-all/workout-add";
     }
 
-    // DELETE EXERCISE --------------------------------------------------------
+    // DELETE WORKOUT --------------------------------------------------------
+    @DeleteMapping("/workout-all/workout-delete/{id}")
+    public String deleteWorkout(@PathVariable Long id) {
+        if (!userSession.isLoggedIn()) {
+            return "redirect:/login";
+        }
+        workoutService.deleteWorkout(id);
+        return "redirect:/workout-all/workout-home";
+    }
 
 }
 

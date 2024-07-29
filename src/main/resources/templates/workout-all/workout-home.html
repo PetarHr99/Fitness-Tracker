@@ -18,6 +18,10 @@
         <div class="card mb-3" style="border-color: #8B4513;">
             <div class="card-header" style="background-color: #FFF5E1; color: #8B4513;">
                 <h5 th:text="${entry.key.title}">Workout Title</h5>
+                <form th:action="@{/workout-all/workout-delete/{id}(id=${entry.key.id})}" method="post" style="display: inline;">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <button type="submit" class="btn btn-danger btn-sm" style="background-color: #8B4513; border-color: #8B4513;">Delete</button>
+                </form>
             </div>
             <div class="card-body" style="background-color: #FFF5E1; color: #8B4513;">
                 <ul style="list-style-type: none;">
