@@ -40,6 +40,9 @@ public class UserController {
 
     @GetMapping("/register")
     public String showRegisterPage() {
+        if (userSession.isLoggedIn()){
+            return "redirect:/home";
+        }
         return "register";
     }
 
@@ -101,6 +104,9 @@ public class UserController {
 
     @GetMapping("/login")
     public String showLoginPage(){
+        if (userSession.isLoggedIn()){
+            return "redirect:/home";
+        }
         return "login";
     }
 

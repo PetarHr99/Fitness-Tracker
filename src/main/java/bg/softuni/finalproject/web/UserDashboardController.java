@@ -14,7 +14,6 @@ import bg.softuni.finalproject.web.dto.UserDashboardDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -94,17 +93,11 @@ public class UserDashboardController {
 
         User user = userService.findByUsername(username);
 
-        UserDashboardDTO dashboardDTO = new UserDashboardDTO();
-        dashboardDTO.setTargetGoal(user.getTargetGoal().toString());
-        dashboardDTO.setAge(user.getAge());
-        dashboardDTO.setWeight(user.getWeight());
-        dashboardDTO.setHeight(user.getHeight());
-        dashboardDTO.setGender(user.getGender().toString());
-        dashboardDTO.setCurrentWeight(user.getCurrentWeight());
+        UserDashboardDTO dashboardDTO = modelMapper.map(user, UserDashboardDTO.class);
 
 
         // Calculate weight difference
-        double startWeight = user.getWeight(); // Assuming you have start weight in the User entity
+        double startWeight = user.getWeight();
         double weightDifference = currentWeight - startWeight;
         dashboardDTO.setWeightDifference(weightDifference);
 
