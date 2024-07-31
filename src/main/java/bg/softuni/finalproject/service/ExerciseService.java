@@ -24,7 +24,6 @@ public class ExerciseService {
         for (ExerciseDTO exerciseDTO : exerciseDTOList){
             Exercise exercise = modelMapper.map(exerciseDTO, Exercise.class);
             exercise.setWorkout(currentWorkout);
-
             exerciseRepository.save(exercise);
         }
     }

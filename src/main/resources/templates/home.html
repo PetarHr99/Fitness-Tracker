@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +22,8 @@
 
 <!-- Home Page Content -->
 <div class="container my-5">
-    <h2 class="text-center" style=""><strong th:text="#{home.welcome}">Welcome, </strong> <span th:text="${username}"> User </span></h2>
+    <h2 class="text-center" style=""><strong th:text="#{home.welcome}">Welcome, </strong>
+        <span sec:authorize="isAuthenticated()" sec:authentication="name"> User </span></h2>
     <div class="row mt-4">
         <div class="col-md-12">
             <div class="card" style="border-color: #8B4513;">
@@ -45,6 +47,7 @@
                 </div>
                 <div class="card-body">
                     <form id="currentDataForm">
+                        <input type="hidden" id="_csrf" th:value="${_csrf.token}" th:attr="name=${_csrf.parameterName}"/>
                         <div class="mb-3">
                             <label for="currentWeight" class="form-label" th:text="#{home.currentWeightLabel}" style="color: #8B4513;">Current Weight (kg)</label>
                             <input type="number" class="form-control" id="currentWeight" name="currentWeight" required style="border-color: #8B4513;">
@@ -91,6 +94,11 @@
 <script>
     async function fetchDashboard() {
         const response = await fetch('/api/dashboard');
+        // Added error handling for fetch response
+        if (!response.ok) {
+            console.error('Failed to fetch dashboard data');
+            return;
+        }
         const data = await response.json();
 
         document.getElementById('targetGoal').textContent = data.targetGoal;
@@ -132,14 +140,23 @@
     document.getElementById('currentDataForm').addEventListener('submit', async function(event) {
         event.preventDefault();
         const currentWeight = document.getElementById('currentWeight').value;
+        const csrfToken = document.getElementById('_csrf').value;
 
         const response = await fetch('/api/dashboard/current-data', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
             },
-            body: JSON.stringify({currentWeight})
+            body: JSON.stringify({ currentWeight: parseFloat(currentWeight) })
         });
+
+        // Added error handling for form submission response
+        if (!response.ok) {
+            console.error('Failed to update current weight');
+            return;
+        }
+
         const data = await response.json();
 
         document.getElementById('currentWeightDisplay').textContent = data.currentWeight;

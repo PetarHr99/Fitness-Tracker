@@ -15,7 +15,7 @@ public class ActivityService {
     private final ActivityRepository activityRepository;
     private final ModelMapper modelMapper;
 
-    public ActivityService(ActivityRepository activityRepository, UserRepository userRepository, ModelMapper modelMapper) {
+    public ActivityService(ActivityRepository activityRepository, ModelMapper modelMapper) {
         this.activityRepository = activityRepository;
         this.modelMapper = modelMapper;
     }
@@ -24,14 +24,9 @@ public class ActivityService {
         activity.setAddedByUser(currentUser);
         return activityRepository.save(activity);
     }
-    public List<Activity> getAllActivities() {
-        return activityRepository.findAll();
-    }
-
     public List<Activity> getActivitiesByUser(User user) {
         return activityRepository.findByAddedByUser(user);
     }
-
     public void deleteActivity(Long id) {
         activityRepository.deleteById(id);
     }

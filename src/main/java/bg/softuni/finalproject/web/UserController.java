@@ -20,12 +20,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class UserController {
     private final UserService userService;
-    private final UserSession userSession;
 
-    public UserController(UserService userService, UserSession userSession) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.userSession = userSession;
-
     }
 
     @ModelAttribute("registerData")
@@ -40,9 +37,6 @@ public class UserController {
 
     @GetMapping("/register")
     public String showRegisterPage() {
-        if (userSession.isLoggedIn()){
-            return "redirect:/home";
-        }
         return "register";
     }
 
@@ -52,29 +46,23 @@ public class UserController {
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes
     ) {
-
-
         if (data == null || bindingResult == null || redirectAttributes == null) {
             throw new IllegalArgumentException("Arguments cannot be null");
         }
-
         // Validate passwords match
         if (!data.getPassword().equals(data.getConfirmPassword())) {
             bindingResult.rejectValue("confirmPassword", "error.registerData", "Passwords do not match");
 
         }
-
         // Check if username exists
         if (userService.existsByUsername(data.getUsername())) {
             bindingResult.rejectValue("username", "error.registerData", "Username is already occupied");
 
         }
-
         // Check if email exists
         if (userService.existsByEmail(data.getEmail())) {
             bindingResult.rejectValue("email", "error.registerData", "Email is already registered");
         }
-
         // Handle validation errors
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("registerData", data);
@@ -82,7 +70,6 @@ public class UserController {
                     "org.springframework.validation.BindingResult.registerData", bindingResult);
             return "redirect:/register";
         }
-
         // Attempt to register the user
         boolean success;
         try {
@@ -91,57 +78,26 @@ public class UserController {
             redirectAttributes.addFlashAttribute("registrationError", "Registration failed due to an unexpected error. Please try again.");
             return "redirect:/register";
         }
-
         // Handle registration failure
         if (!success) {
             redirectAttributes.addFlashAttribute("registrationError", "Registration failed. Please try again.");
             return "redirect:/register";
         }
-
         // Redirect to login on successful registration
         return "redirect:/login";
     }
 
     @GetMapping("/login")
     public String showLoginPage(){
-        if (userSession.isLoggedIn()){
-            return "redirect:/home";
-        }
-        return "login";
+        return "/login";
     }
 
-    @PostMapping("/login")
-    public String doLogin(
-            @Valid LoginDTO loginDTO,
-            BindingResult bindingResult,
-            RedirectAttributes redirectAttributes,
-            HttpSession session
-    ) {
-        if (!userService.validateUser(loginDTO, session)) {
-            bindingResult.reject("loginError", "Invalid username or password");
-            session.setAttribute("loginError", "Invalid username or password");
-        }else {
-            session.removeAttribute("loginError");
-        }
-
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("loginData", loginDTO);
-            redirectAttributes.addFlashAttribute(
-                    "org.springframework.validation.BindingResult.loginData", bindingResult);
-            return "redirect:/login";
-        }
-
-
-        return "redirect:/home";
-    }
 
     @GetMapping("/home")
     public String showHomePage(Model model) {
-        if (!userSession.isLoggedIn()){
-            return "redirect:/login";
-        }
 
-        User user = userService.findByUsername(userSession.getUsername());
+
+        User user = userService.findByUsername("pepi_dx");
 
         if (user.isDailyQuoteShown() == false){
             Quote quote = userService.getRandomQuote();
@@ -153,18 +109,10 @@ public class UserController {
             model.addAttribute("showMessage", false);
         }
 
-        model.addAttribute("username", userSession.getUsername());
+        model.addAttribute("username", user.getUsername());
 
         return "/home";
     }
 
-    @GetMapping("/logout")
-    public String logout() {
-        if (!userSession.isLoggedIn()) {
-            return "redirect:/";
-        }
-        userSession.logout();
-        return "redirect:/";
-    }
 
 }

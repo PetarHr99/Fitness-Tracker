@@ -11,6 +11,8 @@ import bg.softuni.finalproject.web.dto.LoginDTO;
 import bg.softuni.finalproject.web.dto.UserRegisterDTO;
 import jakarta.servlet.http.HttpSession;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -49,6 +51,11 @@ public class UserService {
         return true;
     }
 
+    public User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        return findByUsername(username);
+    }
 
     public boolean existsByUsername(String username) {
         return userRepository.existsByUsername(username);
@@ -58,17 +65,6 @@ public class UserService {
         return userRepository.existsByEmail(email);
     }
 
-    public boolean validateUser(LoginDTO loginDTO, HttpSession session) {
-        User user = userRepository.findByUsername(loginDTO.getUsername());
-
-        if (user != null && passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
-            userSession.login(user.getId(), loginDTO.getUsername());
-
-            return true;
-        }
-
-        return false;
-    }
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }

@@ -11,6 +11,8 @@ import bg.softuni.finalproject.service.UserService;
 import bg.softuni.finalproject.service.WorkoutService;
 import bg.softuni.finalproject.web.dto.WorkoutDTO;
 import jakarta.validation.Valid;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,13 +28,11 @@ public class WorkoutController {
     private final WorkoutService workoutService;
     private final ExerciseService exerciseService;
     private final UserService userService;
-    private final UserSession userSession;
 
-    public WorkoutController(WorkoutService workoutService, ExerciseService exerciseService, UserService userService, UserSession userSession) {
+    public WorkoutController(WorkoutService workoutService, ExerciseService exerciseService, UserService userService) {
         this.workoutService = workoutService;
         this.exerciseService = exerciseService;
         this.userService = userService;
-        this.userSession = userSession;
     }
 
     @ModelAttribute("workoutDTO")
@@ -45,14 +45,15 @@ public class WorkoutController {
         return new ArrayList<>();
     }
 
+
     //HOME WORKOUT ----------------------------------------------------------
 
     @GetMapping("/workout-all/workout-home")
     public String viewHomeWorkout(Model model){
-        if (!userSession.isLoggedIn()){
+        User user = userService.getCurrentUser();
+        if (user == null) {
             return "redirect:/login";
         }
-        User user = userService.findByUsername(userSession.getUsername());
         List<Workout> workoutList = workoutService.findByUser(user);
 
         Collections.reverse(workoutList);
@@ -67,34 +68,17 @@ public class WorkoutController {
         return "/workout-all/workout-home";
     }
 
-//    @GetMapping("/workout-all/workout-home")
-//    public String viewHomeWorkout(Model model){
-//        if (!userSession.isLoggedIn()){
-//            return "redirect:/login";
-//        }
-//        User user = userService.findByUsername(userSession.getUsername());
-//        List<Workout> workoutList = workoutService.findByUser(user);
-//
-//        for (Workout workout : workoutList){
-//            model.addAttribute("singleWorkout", workout);
-//            List<Exercise> exercisesForTheWorkout = exerciseService.findByWorkout(workout);
-//            model.addAttribute("allExercisesForTheWorkout", exercisesForTheWorkout);
-//        }
-//
-////        model.addAttribute("workouts", workoutList);
-//        return "/workout-all/workout-home";
-//    }
 
     //ADD WORKOUT -----------------------------------------------------------
     @GetMapping("/workout-all/workout-add")
     public String viewAddWorkout(Model model, List<ExerciseDTO> exerciseDTOList){
-        if (!userSession.isLoggedIn()){
+        if (userService.getCurrentUser() == null) {
             return "redirect:/login";
         }
         if (!model.containsAttribute("workoutDTO")) {
             model.addAttribute("workoutDTO", new WorkoutDTO());
         }
-//        model.addAttribute("workoutDTO", new WorkoutDTO());
+
         model.addAttribute("exerciseDTOList", exerciseDTOList);
         return "/workout-all/workout-add";
     }
@@ -110,7 +94,10 @@ public class WorkoutController {
             return "redirect:/workout-all/workout-add";
         }
 
-        User currentUser = userService.findByUsername(userSession.getUsername());
+        User currentUser = userService.getCurrentUser();
+        if (currentUser == null) {
+            return "redirect:/login";
+        }
         workoutDTO.setExercises(exerciseDTOList);
         Workout currentWorkout = workoutService.saveWorkout(workoutDTO, currentUser);
         exerciseService.saveExercise(currentWorkout, exerciseDTOList);
@@ -121,7 +108,7 @@ public class WorkoutController {
     //ADD EXERCISE ----------------------------------------------------------
     @GetMapping("/workout-all/exercise-add")
     private String viewAddExercise(Model model){
-        if (!userSession.isLoggedIn()){
+        if (userService.getCurrentUser() == null) {
             return "redirect:/login";
         }
         if (!model.containsAttribute("exerciseDTO")) {
@@ -148,7 +135,8 @@ public class WorkoutController {
     // DELETE WORKOUT --------------------------------------------------------
     @DeleteMapping("/workout-all/workout-delete/{id}")
     public String deleteWorkout(@PathVariable Long id) {
-        if (!userSession.isLoggedIn()) {
+        User currentUser = userService.getCurrentUser();
+        if (currentUser == null) {
             return "redirect:/login";
         }
         workoutService.deleteWorkout(id);

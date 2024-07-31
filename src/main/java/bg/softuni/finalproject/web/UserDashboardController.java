@@ -22,21 +22,21 @@ public class UserDashboardController {
     private final UserService userService;
     private final MealService mealService;
     private final ActivityService activityService;
-    private final UserSession userSession;
     private final ModelMapper modelMapper;
-    public UserDashboardController(UserService userService, MealService mealService, ActivityService activityService, UserSession userSession, ModelMapper modelMapper) {
+    public UserDashboardController(UserService userService, MealService mealService, ActivityService activityService, ModelMapper modelMapper) {
         this.userService = userService;
         this.mealService = mealService;
         this.activityService = activityService;
-        this.userSession = userSession;
         this.modelMapper = modelMapper;
     }
 
     @GetMapping
     public ResponseEntity<UserDashboardDTO> getUserDashboard() {
 
-        String username = userSession.getUsername();
-        User user = userService.findByUsername(username);
+        User user = userService.getCurrentUser();
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
 
         String targetGoal = getString(user);
         String getGender = getGender(user);
@@ -87,23 +87,26 @@ public class UserDashboardController {
 
     @PostMapping("/current-data")
     public ResponseEntity<UserDashboardDTO> updateCurrentWeight(@RequestBody CurrentDataDTO currentDataDTO) {
-        String username = userSession.getUsername();
+        User user = userService.getCurrentUser();
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
         double currentWeight = currentDataDTO.getCurrentWeight();
-        userService.updateCurrentWeight(username, currentWeight);
+        userService.updateCurrentWeight(user.getUsername(), currentWeight);
 
-        User user = userService.findByUsername(username);
+        User userUpdate = userService.getCurrentUser();
 
-        UserDashboardDTO dashboardDTO = modelMapper.map(user, UserDashboardDTO.class);
+        UserDashboardDTO dashboardDTO = modelMapper.map(userUpdate, UserDashboardDTO.class);
 
 
         // Calculate weight difference
-        double startWeight = user.getWeight();
+        double startWeight = userUpdate.getWeight();
         double weightDifference = currentWeight - startWeight;
         dashboardDTO.setWeightDifference(weightDifference);
 
         // Calculate recommended calorie intake
-        double recommendedCalories = getRecommendedCalories(user, currentWeight);
-        userService.updateCurrentCalorieIntake(username, recommendedCalories);
+        double recommendedCalories = getRecommendedCalories(userUpdate, currentWeight);
+        userService.updateCurrentCalorieIntake(user.getUsername(), recommendedCalories);
         dashboardDTO.setRecommendedCalories(recommendedCalories);
 
         return new ResponseEntity<>(dashboardDTO, HttpStatus.OK);

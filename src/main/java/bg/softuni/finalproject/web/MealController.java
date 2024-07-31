@@ -8,6 +8,8 @@ import bg.softuni.finalproject.service.UserService;
 import bg.softuni.finalproject.web.dto.MealDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,13 +23,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class MealController {
     private final MealService mealService;
     private final UserService userService;
-    private final UserSession userSession;
 
     @Autowired
-    public MealController(MealService mealService, UserService userService, UserSession userSession) {
+    public MealController(MealService mealService, UserService userService) {
         this.mealService = mealService;
         this.userService = userService;
-        this.userSession = userSession;
     }
     @ModelAttribute("mealDTO")
     public MealDTO mealDTO() {
@@ -35,21 +35,18 @@ public class MealController {
     }
 
     @GetMapping("/meals-all/meals")
-    public String viewActivitiesPage(Model model) {
-        if (!userSession.isLoggedIn()){
+    public String viewMealsPage(Model model) {
+        User currentUser = userService.getCurrentUser();
+        if (currentUser == null) {
             return "redirect:/login";
         }
-
-        String username = userSession.getUsername();
-        User currentUser = userService.findByUsername(username);
-
         model.addAttribute("meals", mealService.getMealsByUser(currentUser));
         return "/meals-all/meals";
     }
 
     @GetMapping("/meals-all/add-meals")
-    public String showAddActivityForm(Model model) {
-        if (!userSession.isLoggedIn()){
+    public String showAddMealForm(Model model) {
+        if (userService.getCurrentUser() == null) {
             return "redirect:/login";
         }
         model.addAttribute("meal", new MealDTO());
@@ -67,12 +64,11 @@ public class MealController {
             return "redirect:/meals-all/add-meals";
         }
 
-        String username = userSession.getUsername();
-        if (username == null || !userSession.isLoggedIn()) {
+        User currentUser = userService.getCurrentUser();
+        if (currentUser == null) {
             return "redirect:/login";
         }
 
-        User currentUser = userService.findByUsername(username);
         Meal meal = mealService.saveMeal(mealDTO, currentUser);
         return "redirect:/meals-all/meals";
     }

@@ -4,9 +4,11 @@ import bg.softuni.finalproject.Entity.enums.Gender;
 import bg.softuni.finalproject.Entity.enums.SubscriptionPlan;
 import bg.softuni.finalproject.Entity.enums.TargetGoal;
 import jakarta.persistence.*;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "users")
@@ -188,5 +190,4 @@ public class User {
     public void setTargetGoal(TargetGoal targetGoal) {
         this.targetGoal = targetGoal;
     }
-
 }

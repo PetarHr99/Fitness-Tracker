@@ -37,8 +37,9 @@
             </div>
         </div>
 
-        <div th:if="${session.loginError}" class="alert alert-danger">
-            <small th:text="${session.loginError}"></small>
+        <!-- Display error message if login failed -->
+        <div th:if="${param.error}" class="alert alert-danger">
+            <small th:text="#{login.error}">Invalid username or password</small>
         </div>
 
         <button type="submit" class="btn btn-primary" th:text="#{login.submit}" style="background-color: #8B4513; border-color: #8B4513;">Login</button>
