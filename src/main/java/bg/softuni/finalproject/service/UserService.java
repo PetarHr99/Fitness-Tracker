@@ -121,7 +121,6 @@ public class UserService {
     }
 
     public void updateUserDailyQuoteStatus(User user){
-       userRepository.findByUsername(user.getUsername());
        user.setDailyQuoteShown(true);
        userRepository.save(user);
     }

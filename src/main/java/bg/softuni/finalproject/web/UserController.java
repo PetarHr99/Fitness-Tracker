@@ -143,8 +143,6 @@ public class UserController {
 
         User user = userService.findByUsername(userSession.getUsername());
 
-        System.out.println(user.isDailyQuoteShown());
-
         if (user.isDailyQuoteShown() == false){
             Quote quote = userService.getRandomQuote();
             model.addAttribute("showMessage", true);
