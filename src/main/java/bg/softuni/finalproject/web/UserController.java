@@ -2,12 +2,9 @@ package bg.softuni.finalproject.web;
 
 import bg.softuni.finalproject.Entity.Quote;
 import bg.softuni.finalproject.Entity.User;
-import bg.softuni.finalproject.config.UserSession;
-import bg.softuni.finalproject.repo.UserRepository;
 import bg.softuni.finalproject.service.UserService;
 import bg.softuni.finalproject.web.dto.LoginDTO;
 import bg.softuni.finalproject.web.dto.UserRegisterDTO;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -95,9 +92,7 @@ public class UserController {
 
     @GetMapping("/home")
     public String showHomePage(Model model) {
-
-
-        User user = userService.findByUsername("pepi_dx");
+        User user = userService.getCurrentUser();
 
         if (user.isDailyQuoteShown() == false){
             Quote quote = userService.getRandomQuote();

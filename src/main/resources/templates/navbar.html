@@ -58,6 +58,10 @@
                     <li sec:authorize="isAuthenticated()" class="nav-item" style="padding: .5rem;">
                         <a class="nav-link" th:href="@{/activity-all/activity}" th:text="#{navbar.activities}" style="color: #8B4513 !important;">Activities</a>
                     </li>
+                    <!-- Messages tab visible only for admin -->
+                    <li sec:authorize="hasRole('ADMIN')" class="nav-item" style="padding: .5rem;">
+                        <a class="nav-link" th:href="@{/messages}" th:text="#{navbar.messages}" style="color: #8B4513 !important;">Messages</a>
+                    </li>
                     <li sec:authorize="isAuthenticated()" class="nav-item" style="padding: .5rem;">
                         <form th:action="@{/logout}" th:method="post" style="display: inline; margin: 0; padding: 0;">
                             <button type="submit" class="nav-link" style="background: none; border: none; color: #8B4513; font: inherit; cursor: pointer; padding: 0.5rem;">

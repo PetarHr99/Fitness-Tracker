@@ -46,8 +46,9 @@ public class DataInitializer {
                     "Imagine your life is perfect in every respect; what would it look like?",
                     "We generate fears while we sit. We overcome them by action."
             );
-
-            quotes.forEach(quote -> quoteRepository.save(new Quote(quote)));
+            if (quoteRepository.findAll().isEmpty()) {
+                quotes.forEach(quote -> quoteRepository.save(new Quote(quote)));
+            }
         };
     }
 }

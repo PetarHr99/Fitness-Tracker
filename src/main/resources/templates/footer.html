@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,8 +21,8 @@
             <p class="mb-1" style="padding: .5rem;">
                 <a href="#" th:text="#{footer.backToTop}" style="color: #8B4513 !important;">Back to top</a>
             </p>
-            <p class="mb-1" style="padding: .5rem;">
-                <a th:href="@{/contact}" th:text="#{footer.contactUs}" style="color: #8B4513 !important;">Contact us</a>
+            <p class="mb-1" sec:authorize="!isAuthenticated()" style="padding: .5rem;">
+                <a th:href="@{/admin-all/contact}" th:text="#{footer.contactUs}" style="color: #8B4513 !important;">Contact us</a>
             </p>
         </div>
     </div>

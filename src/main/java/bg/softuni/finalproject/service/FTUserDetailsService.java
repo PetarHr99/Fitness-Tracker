@@ -1,13 +1,19 @@
 package bg.softuni.finalproject.service;
 
+import bg.softuni.finalproject.Entity.Role;
 import bg.softuni.finalproject.Entity.User;
+import bg.softuni.finalproject.Entity.enums.RoleEnum;
 import bg.softuni.finalproject.repo.UserRepository;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class FTUserDetailsService implements UserDetailsService {
@@ -34,8 +40,14 @@ public class FTUserDetailsService implements UserDetailsService {
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getUsername())
                 .password(user.getPassword())
-                .authorities(List.of()) //TODO
+                .authorities(mapRoles(user.getRoles()))
                 .disabled(false)
                 .build();
+    }
+
+    private static Set<GrantedAuthority> mapRoles(List<Role> roles) {
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRoleEnum().name()))
+                .collect(Collectors.toSet());
     }
 }

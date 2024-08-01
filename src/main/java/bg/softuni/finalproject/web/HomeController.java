@@ -1,6 +1,6 @@
 package bg.softuni.finalproject.web;
 
-import bg.softuni.finalproject.config.UserSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -21,8 +21,8 @@ public class HomeController {
         return "pricing";
     }
 
-    @GetMapping("/contact")
+    @GetMapping("/admin-all/contact")
     public String showContactPage(){
-        return "contact";
+        return "/admin-all/contact";
     }
 }

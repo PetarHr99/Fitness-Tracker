@@ -56,6 +56,9 @@ public class User {
     @Column(nullable = false)
     private boolean dailyQuoteShown;
 
+    @OneToMany(mappedBy = "rolesAddedBy", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Role> roles;
+
     public Double getCurrentCalorieIntake() {
         return currentCalorieIntake;
     }
@@ -68,7 +71,7 @@ public class User {
         this.addedWorkouts = new ArrayList<>();
         this.addedActivities = new ArrayList<>();
         this.addedMeals = new ArrayList<>();
-
+        this.roles = new ArrayList<>();
     }
 
     public boolean isDailyQuoteShown() {
@@ -189,5 +192,13 @@ public class User {
 
     public void setTargetGoal(TargetGoal targetGoal) {
         this.targetGoal = targetGoal;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }

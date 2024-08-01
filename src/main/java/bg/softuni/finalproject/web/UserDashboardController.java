@@ -3,7 +3,6 @@ package bg.softuni.finalproject.web;
 import bg.softuni.finalproject.Entity.*;
 import bg.softuni.finalproject.Entity.enums.Gender;
 import bg.softuni.finalproject.Entity.enums.TargetGoal;
-import bg.softuni.finalproject.config.UserSession;
 import bg.softuni.finalproject.service.ActivityService;
 import bg.softuni.finalproject.service.MealService;
 import bg.softuni.finalproject.service.UserService;

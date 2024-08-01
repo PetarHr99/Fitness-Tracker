@@ -1,21 +1,21 @@
 package bg.softuni.finalproject.service;
 
 import bg.softuni.finalproject.Entity.Quote;
+import bg.softuni.finalproject.Entity.Role;
 import bg.softuni.finalproject.Entity.enums.Gender;
+import bg.softuni.finalproject.Entity.enums.RoleEnum;
 import bg.softuni.finalproject.Entity.enums.TargetGoal;
 import bg.softuni.finalproject.Entity.User;
-import bg.softuni.finalproject.config.UserSession;
 import bg.softuni.finalproject.repo.QuoteRepository;
 import bg.softuni.finalproject.repo.UserRepository;
-import bg.softuni.finalproject.web.dto.LoginDTO;
 import bg.softuni.finalproject.web.dto.UserRegisterDTO;
-import jakarta.servlet.http.HttpSession;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Optional;
 import java.util.Random;
 
@@ -23,14 +23,12 @@ import java.util.Random;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final UserSession userSession;
     private final ModelMapper modelMapper;
     private final QuoteRepository quoteRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserSession userSession, ModelMapper modelMapper, QuoteRepository quoteRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder,ModelMapper modelMapper, QuoteRepository quoteRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.userSession = userSession;
         this.modelMapper = modelMapper;
         this.quoteRepository = quoteRepository;
     }
@@ -46,6 +44,19 @@ public class UserService {
         User user = modelMapper.map(data, User.class);
         user.setPassword(passwordEncoder.encode(data.getPassword()));
         user.setDailyQuoteShown(false);
+
+        Role role;
+        if (userRepository.findAll().isEmpty()) {
+            role = new Role();
+            role.setRoleEnum(RoleEnum.ADMIN);
+        } else {
+            role = new Role();
+            role.setRoleEnum(RoleEnum.USER);
+        }
+
+        role.setRolesAddedBy(user);
+        user.setRoles(Collections.singletonList(role));
+
         this.userRepository.save(user);
 
         return true;

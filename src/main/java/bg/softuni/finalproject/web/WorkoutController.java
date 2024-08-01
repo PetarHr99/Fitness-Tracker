@@ -3,7 +3,6 @@ package bg.softuni.finalproject.web;
 
 import bg.softuni.finalproject.Entity.User;
 import bg.softuni.finalproject.Entity.Workout;
-import bg.softuni.finalproject.config.UserSession;
 import bg.softuni.finalproject.Entity.Exercise;
 import bg.softuni.finalproject.web.dto.ExerciseDTO;
 import bg.softuni.finalproject.service.ExerciseService;
@@ -11,8 +10,6 @@ import bg.softuni.finalproject.service.UserService;
 import bg.softuni.finalproject.service.WorkoutService;
 import bg.softuni.finalproject.web.dto.WorkoutDTO;
 import jakarta.validation.Valid;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

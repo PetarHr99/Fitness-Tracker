@@ -14,7 +14,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests( authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/css/**", "/img/**").permitAll()
-                                .requestMatchers("/","/features", "/contact", "/login", "/register", "/pricing").permitAll()
+                                .requestMatchers("/","/features", "/admin-all/contact", "/login", "/register", "/pricing").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin
