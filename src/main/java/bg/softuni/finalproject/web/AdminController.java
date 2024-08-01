@@ -2,7 +2,9 @@ package bg.softuni.finalproject.web;
 
 
 import bg.softuni.finalproject.Entity.Message;
+import bg.softuni.finalproject.Entity.User;
 import bg.softuni.finalproject.repo.MessageRepository;
+import bg.softuni.finalproject.service.UserService;
 import bg.softuni.finalproject.web.dto.MessageDTO;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
@@ -23,10 +25,12 @@ public class AdminController {
 
     private final MessageRepository messageRepository;
     private final ModelMapper modelMapper;
+    private final UserService userService;
 
-    public AdminController(MessageRepository messageRepository, ModelMapper modelMapper) {
+    public AdminController(MessageRepository messageRepository, ModelMapper modelMapper, UserService userService) {
         this.messageRepository = messageRepository;
         this.modelMapper = modelMapper;
+        this.userService = userService;
     }
 
     @GetMapping("/admin-all/contact")
@@ -54,6 +58,10 @@ public class AdminController {
 
     @GetMapping("/admin-all/messages")
     public String showMessagesPage(Model model) {
+        User currentUser = userService.getCurrentUser();
+        if (currentUser == null) {
+            return "redirect:/login";
+        }
         List<Message> messagesList = messageRepository.findAllOrderByAnswered();
         model.addAttribute("messagesList", messagesList);
         return "/admin-all/messages";

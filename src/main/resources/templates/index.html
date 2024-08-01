@@ -8,8 +8,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
         .carousel-item img {
-            max-height: 500px; /* Set your desired maximum height */
-            object-fit: cover; /* Maintain aspect ratio and cover the container */
+            max-height: 500px;
+            object-fit: cover;
             width: 100%;
         }
     </style>
@@ -20,34 +20,34 @@
 <div th:replace="navbar :: navbar"></div>
 
 <!-- Hero Section -->
-<section class="jumbotron text-center" style="color: #8B4513; padding: 2rem 0;"> <!-- Inline CSS for section styling -->
-    <div id="carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000"> <!-- Updated data attributes for Bootstrap 5 -->
+<section class="jumbotron text-center" style="color: #8B4513; padding: 2rem 0;">
+    <div id="carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img th:src="@{/img/carousel-1.png}" alt="Slide 1" class="d-block w-100" style="max-height: 500px; object-fit: cover;"> <!-- Inline CSS to limit height and maintain aspect ratio -->
+                <img th:src="@{/img/carousel-3-new.png}" alt="Slide 1" class="d-block w-100" style="max-height: 500px; object-fit: cover;">
             </div>
             <div class="carousel-item">
-                <img th:src="@{/img/carousel-2.png}" alt="Slide 2" class="d-block w-100" style="max-height: 500px; object-fit: cover;"> <!-- Inline CSS to limit height and maintain aspect ratio -->
+                <img th:src="@{/img/carousel-2-new.png}" alt="Slide 2" class="d-block w-100" style="max-height: 500px; object-fit: cover;">
             </div>
             <div class="carousel-item">
-                <img th:src="@{/img/carousel-3.png}" alt="Slide 3" class="d-block w-100" style="max-height: 500px; object-fit: cover;"> <!-- Inline CSS to limit height and maintain aspect ratio -->
+                <img th:src="@{/img/carousel-1-new.png}" alt="Slide 3" class="d-block w-100" style="max-height: 500px; object-fit: cover;">
             </div>
         </div>
 
         <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: #8B4513;"></span> <!-- Inline CSS for arrow color -->
+            <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: #8B4513;"></span>
             <span class="visually-hidden">Previous</span>
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: #8B4513;"></span> <!-- Inline CSS for arrow color -->
+            <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: #8B4513;"></span>
             <span class="visually-hidden">Next</span>
         </button>
     </div>
-    <h1 class="jumbotron-heading" th:text="#{hero.welcome}" style="margin-top: 1rem;">Welcome to Fitness Tracker</h1> <!-- Inline CSS for margin -->
+    <h1 class="jumbotron-heading" th:text="#{hero.welcome}" style="margin-top: 1rem;">Welcome to Fitness Tracker</h1>
     <p class="lead" th:text="#{hero.description}">Track your workouts, diet, and progress all in one place.</p>
     <p>
-        <a th:href="@{/register}" class="btn btn-secondary my-2" th:text="#{hero.getStarted}" style="background-color: #FFF5E1; color: #8B4513; border-color: #FFF5E1;">Get Started</a> <!-- Inline CSS for button colors -->
-        <a th:href="@{/features}" class="btn btn-light my-2" th:text="#{hero.learnMore}" style="background-color: #D2B48C; color: #8B4513; border-color: #D2B48C;">Learn More</a> <!-- Inline CSS for button colors -->
+        <a th:href="@{/register}" class="btn btn-secondary my-2" th:text="#{hero.getStarted}" style="background-color: #FFF5E1; color: #8B4513; border-color: #FFF5E1;">Get Started</a>
+        <a th:href="@{/features}" class="btn btn-light my-2" th:text="#{hero.learnMore}" style="background-color: #D2B48C; color: #8B4513; border-color: #D2B48C;">Learn More</a>
     </p>
 </section>
 
@@ -55,18 +55,18 @@
 <div class="container my-5">
     <div class="row">
         <div class="col-lg-4">
-            <div class="card mb-4 shadow-sm" style="border-color: #8B4513;"> <!-- Inline CSS for card border color -->
-                <img th:src="@{/img/carousel-1.png}" class="card-img-top" alt="Workout Tracking"> <!-- Insert your first image here -->
+            <div class="card mb-4 shadow-sm" style="border-color: #8B4513;">
+                <img th:src="@{/img/carousel-1.png}" class="card-img-top" alt="Workout Tracking">
                 <div class="card-body">
-                    <h5 class="card-title" th:text="#{features.index.workoutTracking.title}" style="color: #8B4513;">Workout Tracking</h5> <!-- Inline CSS for text color -->
-                    <p class="card-text" th:text="#{features.index.workoutTracking.description}" style="color: #8B4513;">Log your workouts and track your progress over time.</p> <!-- Inline CSS for text color -->
-                    <a th:href="@{/features}" class="btn btn-primary" th:text="#{features.learnMore}" style="background-color: #8B4513; border-color: #8B4513;">Learn More</a> <!-- Inline CSS for button colors -->
+                    <h5 class="card-title" th:text="#{features.index.workoutTracking.title}" style="color: #8B4513;">Workout Tracking</h5>
+                    <p class="card-text" th:text="#{features.index.workoutTracking.description}" style="color: #8B4513;">Log your workouts and track your progress over time.</p>
+                    <a th:href="@{/features}" class="btn btn-primary" th:text="#{features.learnMore}" style="background-color: #8B4513; border-color: #8B4513;">Learn More</a>
                 </div>
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="card mb-4 shadow-sm" style="border-color: #8B4513;"> <!-- Inline CSS for card border color -->
-                <img th:src="@{/img/diet-tracker.png}" class="card-img-top" alt="Diet Tracking"> <!-- Insert your second image here -->
+            <div class="card mb-4 shadow-sm" style="border-color: #8B4513;">
+                <img th:src="@{/img/diet-tracker.png}" class="card-img-top" alt="Diet Tracking">
                 <div class="card-body">
                     <h5 class="card-title" th:text="#{features.index.dietTracking.title}" style="color: #8B4513;">Diet Tracking</h5> <!-- Inline CSS for text color -->
                     <p class="card-text" th:text="#{features.index.dietTracking.description}" style="color: #8B4513;">Keep track of your daily food intake and nutritional information.</p> <!-- Inline CSS for text color -->
