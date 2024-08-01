@@ -21,8 +21,5 @@ public class HomeController {
         return "pricing";
     }
 
-    @GetMapping("/admin-all/contact")
-    public String showContactPage(){
-        return "/admin-all/contact";
-    }
+
 }

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="#{title.messages}">Messages - Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body style="color: #8B4513;">
+
+<!-- Navbar -->
+<div th:replace="navbar :: navbar"></div>
+
+<!-- Messages Section -->
+<section class="container my-5">
+    <h2 class="text-center mb-4" th:text="#{messages.heading}" style="color: #8B4513;">Messages</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <table class="table table-striped" style="color: #8B4513; background-color: #FFF5E1;">
+                <thead>
+                <tr style="background-color: #D2B48C;">
+                    <th>Email</th>
+                    <th>Name</th>
+                    <th>Message</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="message : ${messagesList}" th:classappend="${message.answered} ? 'table-success' : ''">
+                    <td th:text="${message.email}">Email</td>
+                    <td th:text="${message.name}">Name</td>
+                    <td th:text="${message.message}">Message</td>
+                    <td>
+                        <form th:action="@{/admin-all/messages/toggle-answered}" method="post" style="display:inline;">
+                            <input type="hidden" name="id" th:value="${message.id}">
+                            <button type="submit" class="btn btn-sm" th:classappend="${message.answered} ? 'btn-warning' : 'btn-success'"
+                                    th:text="${message.answered} ? 'Mark as Not Answered' : 'Mark as Answered'"
+                                    style="background-color: #8B4513; border-color: #8B4513; color: white;"></button>
+                        </form>
+                        <form th:action="@{/admin-all/messages/delete}" method="post" style="display:inline;">
+                            <input type="hidden" name="id" th:value="${message.id}">
+                            <button type="submit" class="btn btn-sm btn-danger" style="background-color: #D2B48C; border-color: #D2B48C; color: #8B4513;">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<div th:replace="footer :: footer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

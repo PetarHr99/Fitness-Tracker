@@ -16,18 +16,21 @@
     <h2 class="text-center mb-4" th:text="#{contactUs.heading}" style="color: #8B4513;">Contact Us</h2>
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <form>
+            <form th:action="@{/admin-all/contact}" th:object="${messageDTO}" method="post">
                 <div class="mb-3">
                     <label for="name" class="form-label" th:text="#{contactUs.name}" style="color: #8B4513;">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
+                    <input type="text" class="form-control" id="name" th:field="*{name}" required>
+                    <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label" th:text="#{contactUs.email}" style="color: #8B4513;">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+                    <input type="email" class="form-control" id="email" th:field="*{email}" required>
+                    <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
                 </div>
                 <div class="mb-3">
                     <label for="message" class="form-label" th:text="#{contactUs.message}" style="color: #8B4513;">Message</label>
-                    <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                    <textarea class="form-control" id="message" th:field="*{message}" rows="4" required></textarea>
+                    <div class="text-danger" th:if="${#fields.hasErrors('message')}" th:errors="*{message}"></div>
                 </div>
                 <button type="submit" class="btn btn-primary" th:text="#{contactUs.send}" style="background-color: #8B4513; border-color: #8B4513;">Send Message</button>
             </form>
