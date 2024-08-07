@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="#{title.messages}">Messages - Admin</title>
+    <title th:text="#{messages.title}">Messages - Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body style="color: #8B4513;">
@@ -13,16 +13,16 @@
 
 <!-- Messages Section -->
 <section class="container my-5">
-    <h2 class="text-center mb-4" th:text="#{messages.heading}" style="color: #8B4513;">Messages</h2>
+    <h2 class="text-center mb-4" th:text="#{messages.messages.heading}" style="color: #8B4513;">Messages</h2>
     <div class="row justify-content-center">
         <div class="col-md-10">
             <table class="table table-striped" style="color: #8B4513; background-color: #FFF5E1;">
                 <thead>
                 <tr style="background-color: #D2B48C;">
-                    <th>Email</th>
-                    <th>Name</th>
-                    <th>Message</th>
-                    <th>Actions</th>
+                    <th th:text="#{messages.table.email}">Email</th>
+                    <th th:text="#{messages.table.name}">Name</th>
+                    <th th:text="#{messages.table.message}">Message</th>
+                    <th th:text="#{messages.table.actions}">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -34,12 +34,12 @@
                         <form th:action="@{/admin-all/messages/toggle-answered}" method="post" style="display:inline;">
                             <input type="hidden" name="id" th:value="${message.id}">
                             <button type="submit" class="btn btn-sm" th:classappend="${message.answered} ? 'btn-warning' : 'btn-success'"
-                                    th:text="${message.answered} ? 'Mark as Not Answered' : 'Mark as Answered'"
+                                    th:text="${message.answered} ? #{messages.table.mark.not.answered} : #{messages.table.mark.answered}"
                                     style="background-color: #8B4513; border-color: #8B4513; color: white;"></button>
                         </form>
                         <form th:action="@{/admin-all/messages/delete}" method="post" style="display:inline;">
                             <input type="hidden" name="id" th:value="${message.id}">
-                            <button type="submit" class="btn btn-sm btn-danger" style="background-color: #D2B48C; border-color: #D2B48C; color: #8B4513;">Delete</button>
+                            <button type="submit" class="btn btn-sm btn-danger" th:text="#{messages.table.delete}" style="background-color: #D2B48C; border-color: #D2B48C; color: #8B4513;">Delete</button>
                         </form>
                     </td>
                 </tr>
