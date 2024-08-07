@@ -6,6 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="#{title.features}">Features - Fitness Tracker</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .card-hover {
+            transition: transform 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: scale(1.05);
+        }
+    </style>
 </head>
 <body>
 
@@ -17,7 +26,7 @@
     <h2 class="text-center" th:text="#{features.heading}" style="color: #8B4513;">Our Features</h2>
     <div class="row mt-4">
         <div class="col-lg-4">
-            <div class="card mb-4 shadow-sm" style="border-color: #8B4513;">
+            <div class="card mb-4 shadow-sm card-hover" style="border-color: #8B4513;">
                 <img th:src="@{/img/carousel-1.png}" class="card-img-top" alt="Workout Tracking">
                 <div class="card-body">
                     <h5 class="card-title" th:text="#{features.workoutTracking.title}" style="color: #8B4513;">Workout Tracking</h5>
@@ -26,7 +35,7 @@
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="card mb-4 shadow-sm" style="border-color: #8B4513;">
+            <div class="card mb-4 shadow-sm card-hover" style="border-color: #8B4513;">
                 <img th:src="@{/img/diet-tracker.png}" class="card-img-top" alt="Diet Tracking">
                 <div class="card-body">
                     <h5 class="card-title" th:text="#{features.dietTracking.title}" style="color: #8B4513;">Diet Tracking</h5>
@@ -35,8 +44,8 @@
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="card mb-4 shadow-sm" style="border-color: #8B4513;">
-                <img th:src="@{/img/progress.png}"  class="card-img-top" alt="Progress Monitoring">
+            <div class="card mb-4 shadow-sm card-hover" style="border-color: #8B4513;">
+                <img th:src="@{/img/progress.png}" class="card-img-top" alt="Progress Monitoring">
                 <div class="card-body">
                     <h5 class="card-title" th:text="#{features.progressMonitoring.title}" style="color: #8B4513;">Progress Monitoring</h5>
                     <p class="card-text" th:text="#{features.progressMonitoring.description}" style="color: #8B4513;">Monitor your fitness journey and see your improvements with our intuitive progress tracking tools.</p>
