@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Exercise</title>
+    <title th:text="#{exercise-add.title}">Add Exercise</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body style="background-color: #FFF5E1; color: #8B4513;">
@@ -11,37 +11,37 @@
 <div th:replace="navbar :: navbar"></div>
 
 <div class="container my-5">
-    <h1 class="text-center" style="color: #8B4513;">Add Exercise</h1>
+    <h1 class="text-center" style="color: #8B4513;" th:text="#{exercise-add.title}">Add Exercise</h1>
     <form th:action="@{/workout-all/exercise-add}" th:object="${exerciseDTO}" method="POST">
         <div class="mb-3">
-            <label for="name" class="form-label" style="color: #8B4513;">Exercise Name</label>
+            <label for="name" class="form-label" style="color: #8B4513;" th:text="#{exercise-add.name}">Exercise Name</label>
             <input type="text" class="form-control" id="name" th:field="*{name}" th:errorclass="is-invalid" required style="border-color: #8B4513;">
             <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
                 <small th:errors="*{name}"></small>
             </div>
         </div>
         <div class="mb-3">
-            <label for="sets" class="form-label" style="color: #8B4513;">Sets</label>
+            <label for="sets" class="form-label" style="color: #8B4513;" th:text="#{exercise-add.sets}">Sets</label>
             <input type="number" class="form-control" id="sets" th:field="*{sets}" th:errorclass="is-invalid" required style="border-color: #8B4513;">
             <div th:if="${#fields.hasErrors('sets')}" class="invalid-feedback">
                 <small th:errors="*{sets}"></small>
             </div>
         </div>
         <div class="mb-3">
-            <label for="reps" class="form-label" style="color: #8B4513;">Reps</label>
+            <label for="reps" class="form-label" style="color: #8B4513;" th:text="#{exercise-add.reps}">Reps</label>
             <input type="number" class="form-control" id="reps" th:field="*{reps}" th:errorclass="is-invalid" required style="border-color: #8B4513;">
             <div th:if="${#fields.hasErrors('reps')}" class="invalid-feedback">
                 <small th:errors="*{reps}"></small>
             </div>
         </div>
         <div class="mb-3">
-            <label for="weight" class="form-label" style="color: #8B4513;">Weight in kg</label>
+            <label for="weight" class="form-label" style="color: #8B4513;" th:text="#{exercise-add.weight}">Weight in kg</label>
             <input type="number" class="form-control" id="weight" th:field="*{weight}" th:errorclass="is-invalid" required style="border-color: #8B4513;">
             <div th:if="${#fields.hasErrors('weight')}" class="invalid-feedback">
                 <small th:errors="*{weight}"></small>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary" style="background-color: #8B4513; border-color: #8B4513;">Save Exercise</button>
+        <button type="submit" class="btn btn-primary" style="background-color: #8B4513; border-color: #8B4513;" th:text="#{exercise-add.save.button}">Save Exercise</button>
     </form>
 </div>
 <!-- Footer -->

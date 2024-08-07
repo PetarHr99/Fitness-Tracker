@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Workout - Fitness Tracker</title>
+    <title th:text="#{workout-add.title}">Add Workout - Fitness Tracker</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body style="background-color: #FFF5E1; color: #8B4513;">
 <!-- Navbar -->
 <div th:replace="navbar :: navbar"></div>
 <div class="container my-5">
-    <h2 class="text-center" style="color: #8B4513;">Add New Workout</h2>
+    <h2 class="text-center" style="color: #8B4513;" th:text="#{workout-add.header}">Add New Workout</h2>
 
     <form th:action="@{/workout-all/workout-add}" th:object="${workoutDTO}" method="POST">
 
         <div class="mb-3">
-            <label for="title" class="form-label" style="color: #8B4513;">Title</label>
+            <label for="title" class="form-label" style="color: #8B4513;" th:text="#{workout-add.label.title}">Title</label>
             <input type="text" class="form-control" id="title" th:field="*{title}" th:errorclass="is-invalid" required style="border-color: #8B4513;">
             <div th:if="${#fields.hasErrors('title')}" class="invalid-feedback">
                 <small th:errors="*{title}"></small>
@@ -23,21 +23,20 @@
         </div>
 
         <div class="mb-3">
-            <a th:href="@{/workout-all/exercise-add}" class="btn btn-primary mb-3" style="background-color: #8B4513; border-color: #8B4513;">Add New Exercise</a>
+            <a th:href="@{/workout-all/exercise-add}" class="btn btn-primary mb-3" style="background-color: #8B4513; border-color: #8B4513;" th:text="#{workout-add.add.exercise}">Add New Exercise</a>
         </div>
 
-        <div class="mb-3" style="color: #8B4513;">Current exercises in the workout</div>
+        <div class="mb-3" style="color: #8B4513;" th:text="#{workout-add.current.exercises}">Current exercises in the workout</div>
 
         <div class="list-group" th:if="${!exerciseDTOList.isEmpty()}">
             <div class="list-group-item" th:each="exDTO, stat : ${exerciseDTOList}" style="border-color: #8B4513; background-color: #FFF5E1; color: #8B4513;">
-                <h5 th:text="'Name: ' + ${exDTO.name} + ' ->  Sets: ' + ${exDTO.sets} +
-                                        ' ->  Reps: ' + ${exDTO.reps} + ' ->  Weight: ' + ${exDTO.weight}"></h5>
+                <h5 th:text="'Name: ' + ${exDTO.name} + ' ->  Sets: ' + ${exDTO.sets} + ' ->  Reps: ' + ${exDTO.reps} + ' ->  Weight: ' + ${exDTO.weight}"></h5>
             </div>
         </div>
 
-        <p th:if="${exerciseDTOList.isEmpty()}" style="color: #8B4513;">No added exercises to this workout</p>
+        <p th:if="${exerciseDTOList.isEmpty()}" style="color: #8B4513;" th:text="#{workout-add.no.exercises}">No added exercises to this workout</p>
 
-        <button type="submit" class="btn btn-primary" style="background-color: #8B4513; border-color: #8B4513;">Save Workout</button>
+        <button type="submit" class="btn btn-primary" style="background-color: #8B4513; border-color: #8B4513;" th:text="#{workout-add.save.button}">Save Workout</button>
     </form>
 </div>
 <!-- Footer -->

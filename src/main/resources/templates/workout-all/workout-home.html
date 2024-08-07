@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workouts Home - Fitness Tracker</title>
+    <title th:text="#{workouts-home.title}">Workouts Home - Fitness Tracker</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body style="color: #8B4513;">
 <!-- Navbar -->
 <div th:replace="navbar :: navbar"></div>
 <div class="container my-5">
-    <h2 class="text-center" style="color: #8B4513;">Workouts</h2>
-    <a href="/workout-all/workout-add" class="btn btn-primary mb-3 text-center" style="background-color: #8B4513; border-color: #8B4513;">Add New Workout</a>
-    <h2 class="text-center" style="color: #8B4513;">Previous Workouts</h2>
+    <h2 class="text-center" style="color: #8B4513;" th:text="#{workouts-home.header}">Workouts</h2>
+    <a th:href="@{/workout-all/workout-add}" class="btn btn-primary mb-3 text-center" style="background-color: #8B4513; border-color: #8B4513;" th:text="#{workouts-home.add.button}">Add New Workout</a>
+    <h2 class="text-center" style="color: #8B4513;" th:text="#{workouts-home.previous.header}">Previous Workouts</h2>
 
     <div th:each="entry : ${workoutExercisesMap}">
         <div class="card mb-3" style="border-color: #8B4513;">
@@ -20,14 +20,13 @@
                 <h5 th:text="${entry.key.title}">Workout Title</h5>
                 <form th:action="@{/workout-all/workout-delete/{id}(id=${entry.key.id})}" method="post" style="display: inline;">
                     <input type="hidden" name="_method" value="delete"/>
-                    <button type="submit" class="btn btn-danger btn-sm" style="background-color: #8B4513; border-color: #8B4513;">Delete</button>
+                    <button type="submit" class="btn btn-danger btn-sm" style="background-color: #8B4513; border-color: #8B4513;" th:text="#{workouts-home.delete.button}">Delete</button>
                 </form>
             </div>
             <div class="card-body" style="background-color: #FFF5E1; color: #8B4513;">
                 <ul style="list-style-type: none;">
                     <li th:each="exercise : ${entry.value}">
-                        <span th:text="'Name: ' + ${exercise.name} + ' ->  Sets: ' + ${exercise.sets} +
-                                            ' ->  Reps: ' + ${exercise.reps} + ' ->  Weight: ' + ${exercise.weight}"></span>
+                        <span th:text="#{workouts-home.exercise.details(${exercise.name}, ${exercise.sets}, ${exercise.reps}, ${exercise.weight})}"></span>
                     </li>
                 </ul>
             </div>
